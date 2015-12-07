@@ -15,8 +15,12 @@
 # gem 'pg'
 #
 default: &default
-  adapter: postgresql
+  adapter: postgis
   encoding: unicode
+  postgis_extension: postgis
+  schema_search_path: public
+  su_username: postgres
+  su_password: postgres1234
   # For details on connection pooling, see rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: 5
@@ -24,6 +28,8 @@ default: &default
 development:
   <<: *default
   database: playmall_development
+  username: postgres
+  password: postgres1234
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
@@ -58,6 +64,8 @@ development:
 test:
   <<: *default
   database: playmall_test
+  username: postgres
+  password: postgres1234
 
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -80,6 +88,9 @@ test:
 #
 production:
   <<: *default
+  host: <%= ENV['MALL_DATABASE_HOST'] %>
+  su_username: postgres
+  su_password: <%= ENV['SU_DATABASE_PASSWORD'] %>
   database: playmall_production
   username: playmall
-  password: <%= ENV['PLAYMALL_DATABASE_PASSWORD'] %>
+  password: <%= ENV['MALL_DATABASE_PASSWORD'] %>
