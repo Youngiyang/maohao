@@ -21,3 +21,6 @@
 
 en:
   hello: "Hello world"
+
+  error:
+    "000": 'Success'
