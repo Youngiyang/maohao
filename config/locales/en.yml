@@ -24,3 +24,6 @@ en:
 
   error:
     "000": 'Success'
+    '101': 'undefined error code！'
+    '100001': 'bad mobile'
+    '100002': 'send error'

@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
-  namesapce :v1 do
+  namespace :v1 do
+    resources :auth_codes, only: [:create]
   end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
