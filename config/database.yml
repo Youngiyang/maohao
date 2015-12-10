@@ -28,8 +28,8 @@ default: &default
 development:
   <<: *default
   database: playmall_development
-  username: playmall
-  password: 
+  username: postgres
+  password: postgres1234
 test:
   <<: *default
   database: playmall_test

@@ -111,7 +111,7 @@ ActiveRecord::Schema.define(version: 20151208060438) do
     t.boolean   "business_on_holiday",                                                          default: true,  null: false
     t.float     "star_grade",                                                                   default: 5.0,   null: false
     t.integer   "user_id",                                                                                      null: false
-    t.boolean   "is_recommand",                                                                 default: true,  null: false
+    t.boolean   "is_recommand",                                                                 default: false, null: false
     t.text      "description",                                                                  default: "",    null: false
     t.boolean   "is_own",                                                                       default: false, null: false
     t.text      "notice",                                                                       default: "",    null: false
