@@ -3,11 +3,12 @@
 <head>
   <%= render "layouts/head" %>
 </head>
-<body class="bg-4">
+<body class="bg-1">
 <!-- Preloader -->
-  <div class="mask"><div id="loader"></div></div>
+<div class="mask"><div id="loader"></div></div>
 <!--/Preloader -->
-<%= render "layouts/navbar" %>
+
+<%= yield %>
 
 </body>
 </html>

@@ -1,4 +1,13 @@
 Rails.application.routes.draw do
+  resources :templates
+  get 'temp_index' => 'templates#index'
+  get 'temp_manageuser' => 'templates#manageuser'
+  get 'temp_manageshop' => 'templates#manageshop'
+  get 'temp_login' => 'templates#login'
+  get 'temp_forgetpasswd' => 'templates#forgetpasswd'
+  get 'temp_admin_login' => 'templates#admin_login'
+  root 'templates#index'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
