@@ -11,11 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151208060438) do
+ActiveRecord::Schema.define(version: 20151209075940) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "postgis"
+
+  create_table "auth_codes", force: :cascade do |t|
+    t.string   "mobile",                     null: false
+    t.string   "code",                       null: false
+    t.boolean  "auth_state",                 null: false
+    t.integer  "validated_time", default: 0, null: false
+    t.datetime "sent_at",                    null: false
+    t.datetime "expire_at",                  null: false
+  end
+
+  add_index "auth_codes", ["mobile"], name: "index_auth_codes_on_mobile", unique: true, using: :btree
 
   create_table "collections", force: :cascade do |t|
     t.integer  "user_id",     null: false
