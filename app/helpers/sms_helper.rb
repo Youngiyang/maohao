@@ -1,5 +1,5 @@
 module SmsHelper
-  def self.send_auth_code_sms number, code
+  def self.send_auth_code_sms number, code, type
     unless Rails.env == 'production'
       return true
     end
