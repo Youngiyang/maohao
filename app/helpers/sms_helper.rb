@@ -1,5 +1,8 @@
 module SmsHelper
   def self.send_auth_code_sms number, code
+    unless Rails.env == 'production'
+      return true
+    end
     content = "【茂号网】验证码：#{code}，此验证码10分钟内有效。非本人操作，请忽略"
     url = "http://106.3.37.99:7799/sms.aspx?action=send&userid=668&account=mt&password=123456&mobile=#{number}&content=#{content}"
     uri = URI.parse(URI.encode(url.strip))
