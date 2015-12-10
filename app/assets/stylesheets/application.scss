@@ -10,6 +10,19 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
- *= require_tree .
  *= require_self
  */
+@import 'plugins/bootstrap';
+@import 'plugins/font-awesome';
+@import 'plugins/animate';
+@import 'plugins/jquery/jquery.mmenu.all';
+@import 'plugins/jquery/jquery.videobackground';
+@import 'plugins/bootstrap-checkbox';
+@import 'plugins/rickshaw';
+@import 'plugins/morris.core';
+@import 'plugins/tabdrop';
+@import 'plugins/summernote';
+@import 'plugins/summernote-bs3';
+@import 'plugins/chosen';
+@import 'plugins/chosen-bootstrap';
+@import 'plugins/minimal';
