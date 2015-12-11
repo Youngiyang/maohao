@@ -29,3 +29,4 @@ en:
     '100001': 'bad mobile phone number'
     '100002': 'send error'
     '100003': 'intenal error'
+    '100004': 'bad request'
