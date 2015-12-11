@@ -10,7 +10,7 @@ class AuthCode < ActiveRecord::Base
   end
 
   def activated?
-    !auth_state && Time.now > expire_at
+    !auth_state && Time.now < expire_at
   end
 
   def send_frequently?
