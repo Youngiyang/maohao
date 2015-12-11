@@ -4,7 +4,6 @@ class V1::AuthCodesController < V1::BaseController
 
     auth_code = AuthCode.new(mobile: params[:mobile], auth_state: false)
 
-    binding.pry
     if auth_code.save
       auth_code_type = 'sign_up'
       if SmsHelper.send_auth_code_sms params[:mobile], auth_code.code, auth_code_type
