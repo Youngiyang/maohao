@@ -19,7 +19,7 @@ class V1::AuthCodesController < V1::BaseController
 
     if auth_code.save
       if SmsHelper.send_auth_code_sms params[:mobile], auth_code.code, auth_code_type
-        auth_code.update_attributes(sent_at: Time.now)
+        auth_code.update_attribute(:sent_at, Time.now)
         status = true
         return_hash[:message] = '手机验证码发送成功'
       else
