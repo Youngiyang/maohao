@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   get 'temp_login' => 'templates#login'
   get 'temp_forgetpasswd' => 'templates#forgetpasswd'
   get 'temp_admin_login' => 'templates#admin_login'
-  root 'templates#index'
+  root 'static_pages#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
