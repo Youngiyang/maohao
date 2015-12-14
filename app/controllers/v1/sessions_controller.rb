@@ -13,6 +13,6 @@ class V1::SessionsController < V1::BaseController
     else
       code = "101002"
     end
-      render json: api_return(status, code, return_hash)
+    render json: api_return(status, code, return_hash)
   end
 end
