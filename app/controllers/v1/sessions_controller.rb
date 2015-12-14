@@ -15,8 +15,4 @@ class V1::SessionsController < V1::BaseController
     end
       render json: api_return(status, code, return_hash)
   end
-
-  # def session_params
-  #   params.require().permit(:mobile, :password)
-  # end
 end
