@@ -1,19 +1,19 @@
     <!-- Wrap all page content here -->
     <div id="wrap">
 
-      
+
 
 
       <!-- Make page fluid -->
       <div class="row">
-        
+
 
 
 
 
         <!-- Fixed navbar -->
         <div class="navbar navbar-default navbar-fixed-top navbar-transparent-black mm-fixed-top" role="navigation" id="navbar">
-          
+
 
 
           <!-- Branding -->
@@ -32,7 +32,7 @@
 
           <!-- .nav-collapse -->
           <div class="navbar-collapse">
-                        
+
             <!-- Page refresh -->
             <ul class="nav navbar-nav refresh">
               <li class="divided">
@@ -43,9 +43,9 @@
 
             <!-- Quick Actions -->
             <ul class="nav navbar-nav quick-actions hidden-xs">
-              
+
               <li class="dropdown divided">
-                
+
                 <a class="dropdown-toggle button" data-toggle="dropdown" href="#">
                   <i class="fa fa-tasks"></i>
                   <span class="label label-transparent-black">2</span>
@@ -124,7 +124,7 @@
               </li>
 
               <li class="dropdown divided">
-                
+
                 <a class="dropdown-toggle button" data-toggle="dropdown" href="#">
                   <i class="fa fa-envelope"></i>
                   <span class="label label-transparent-black">1</span>
@@ -151,7 +151,7 @@
               </li>
 
               <li class="dropdown divided">
-                
+
                 <a class="dropdown-toggle button" data-toggle="dropdown" href="#">
                   <i class="fa fa-bell"></i>
                   <span class="label label-transparent-black">3</span>
@@ -159,7 +159,7 @@
 
                 <ul class="dropdown-menu dropdown-menu-right wide arrow nopadding bordered">
                   <li><h1>You have <strong>3</strong> new notifications</h1></li>
-                  
+
                   <li>
                     <a href="#">
                       <span class="label label-green"><i class="fa fa-user"></i></span>
@@ -209,11 +209,11 @@
                 <a class="dropdown-toggle options" data-toggle="dropdown" href="#">
                   管理员 <i class="fa fa-caret-down"></i>
                 </a>
-                
+
                 <ul class="dropdown-menu dropdown-menu-right arrow settings">
 
                   <li>
-                    
+
                     <h3>主题:</h3>
                     <ul id="color-schemes">
                       <li><a href="#" class="bg-1"></a></li>
@@ -239,7 +239,15 @@
                   <li class="divider"></li>
 
                   <li>
-                    <a href="#"><i class="fa fa-power-off"></i> 退出</a>
+                    <% if @current_user %>
+                      <%= link_to seller_logout_path, method: "delete" do %>
+                        <i class="fa fa-power-off"></i>安全退出
+                      <% end %>
+                    <% else %>
+                      <%= link_to admin_logout_path, method: "delete" do %>
+                        <i class="fa fa-power-off"></i>退出
+                      <% end %>
+                    <% end %>
                   </li>
                 </ul>
               </li>
@@ -258,11 +266,11 @@
 
               <li class="navigation" id="navigation">
                 <a class="sidebar-toggle" data-toggle="#navigation" href="#">导航 <i class="fa fa-angle-up"></i></a>
-                
+
                 <ul class="menu">
-                  
+
                   <%= render 'layouts/menus', menus: @settings[:menus] %>
-                  
+
                 </ul>
 
               </li>
@@ -298,7 +306,7 @@
 
               </li>
 
-              
+
             </ul>
             <!-- Sidebar end -->
 
@@ -315,20 +323,20 @@
 
         </div>
         <!-- Fixed navbar end -->
-        
 
 
 
 
-        
+
+
         <!-- Page content -->
         <div id="content" class="col-md-12">
           <!-- page header -->
           <div class="pageheader">
-            
 
-            <h2><%= @current_menu[:name] %></h2> 
-            
+
+            <h2><%= @current_menu[:name] %></h2>
+
 
             <div class="breadcrumbs">
               <ol class="breadcrumb">
@@ -343,13 +351,13 @@
 
           </div>
           <!-- /page header -->
-                    
+
           <!-- content main container -->
           <div class="main">
             <%= yield %>
           </div>
           <!-- /content container -->
-          
+
         </div>
         <!-- Page content end -->
 
