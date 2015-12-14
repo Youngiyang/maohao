@@ -26,7 +26,14 @@ en:
     "000": 'Success'
     '101': 'undefined error code！'
 
-    '100001': 'bad mobile phone number'
+    '100001': 'missing parameter mobile or auth_code_type'
     '100002': 'send error'
-    '100003': 'intenal error'
-    '100004': 'bad request'
+    '100003': 'bad parameters'
+    '100004': 'has been registered'
+    '100005': 'not registered'
+
+    #register
+    '102001': 'has been registered'
+    '102002': 'bad parameters'
+    '102003': 'bad auth code'
+    '102004': 'missing parameter mobile or password'
