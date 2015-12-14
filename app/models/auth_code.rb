@@ -9,6 +9,11 @@ class AuthCode < ActiveRecord::Base
     ((0...9).to_a.sample(3) + (0...9).to_a.sample(3)).join()
   end
 
+  def self.valid_auth_code?(mobile, auth_code_type, code)
+    target_auth_code = where(mobile: mobile, auth_code_type: auth_code_type, auth_state: false).last
+    target_auth_code && target_auth_code.activated? && target_auth_code.code == code
+  end
+
   def activated?
     !auth_state && Time.now < expire_at
   end
