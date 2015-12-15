@@ -1,16 +1,7 @@
     <!-- Wrap all page content here -->
     <div id="wrap">
-
-
-
-
       <!-- Make page fluid -->
       <div class="row">
-
-
-
-
-
         <!-- Fixed navbar -->
         <div class="navbar navbar-default navbar-fixed-top navbar-transparent-black mm-fixed-top" role="navigation" id="navbar">
 
@@ -19,7 +10,7 @@
           <!-- Branding -->
           <div class="navbar-header col-md-2">
             <a class="navbar-brand" href="index.html">
-              茂号管理中心
+              茂号商家管理中心
             </a>
             <div class="sidebar-collapse">
               <a href="#">
@@ -239,14 +230,8 @@
                   <li class="divider"></li>
 
                   <li>
-                    <% if @current_user %>
-                      <%= link_to seller_logout_path, method: "delete" do %>
-                        <i class="fa fa-power-off"></i>安全退出
-                      <% end %>
-                    <% else %>
-                      <%= link_to admin_logout_path, method: "delete" do %>
-                        <i class="fa fa-power-off"></i>退出
-                      <% end %>
+                    <%= link_to seller_logout_path, method: "delete" do %>
+                      <i class="fa fa-power-off"></i>安全退出
                     <% end %>
                   </li>
                 </ul>
@@ -269,7 +254,7 @@
 
                 <ul class="menu">
 
-                  <%= render 'layouts/menus', menus: @settings[:menus] %>
+                  <%= render 'layouts/seller/menus', menus: @settings[:menus] %>
 
                 </ul>
 

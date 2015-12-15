@@ -1,5 +1,5 @@
-class Seller::SessionsController < ApplicationController
-  layout 'pages'
+class Seller::SessionsController < Seller::BaseController
+  layout 'seller/pages'
   skip_before_action :authenticated!, only: [:new, :create]
   def new
   end

@@ -1,4 +1,5 @@
-class TemplatesController < ApplicationController
+class TemplatesController < Admin::BaseController
+  skip_before_action :authenticated!
   before_action :settings
 
   def index
