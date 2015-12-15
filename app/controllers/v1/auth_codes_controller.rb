@@ -17,9 +17,9 @@ class V1::AuthCodesController < V1::BaseController
         AuthCode.deactivate_old_auth_code(params[:mobile], params[:auth_code_type])
         result =  check_auth_type_for_mobile(params[:mobile], params[:auth_code_type])
         if result.nil?
-          auth_code.save(validate: false)
           if SmsHelper.send_auth_code_sms params[:mobile], auth_code.code, auth_code_type
-            auth_code.update_attribute(:sent_at, Time.now)
+            auth_code.sent_at = Time.now
+            auth_code.save(validate: false)
             status = true
             return_hash[:message] = '手机验证码发送成功'
           else
