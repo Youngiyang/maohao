@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     resources :auth_codes, only: [:create]
     resources :users, only: [:create]
     resources :sessions, only: [:create]
+    post 'forget_password' => 'users#forget_password'
   end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
