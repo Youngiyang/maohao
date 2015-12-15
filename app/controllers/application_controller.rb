@@ -16,8 +16,8 @@ class ApplicationController < ActionController::Base
   end
 
   def return_error_json code, hash={}
-    message = I18n.t code, scope: 'error'
     return_hash = {}
+    message = I18n.t code, scope: 'error'
     if message.include?('translation missing')
       # error code not defined
       return_hash[:code] = 101
@@ -27,5 +27,6 @@ class ApplicationController < ActionController::Base
       return_hash[:message] = message
     end
     return_hash.merge!(hash).to_json
+    return_hash
   end
 end
