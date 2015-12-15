@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     post "login" => 'sessions#create'
     delete "logout" => 'sessions#destroy'
     resources :users, only: [:show]
+    resources :password_reset
   end
 
   namespace :admin do
@@ -12,6 +13,7 @@ Rails.application.routes.draw do
     get "login" => 'sessions#new'
     post "login" => 'sessions#create'
     delete "logout" => 'sessions#destroy'
+    resources :password_reset
 
   end
 
@@ -23,7 +25,7 @@ Rails.application.routes.draw do
   get 'temp_login' => 'templates#login'
   get 'temp_forgetpasswd' => 'templates#forgetpasswd'
   get 'temp_admin_login' => 'templates#admin_login'
-  root 'static_pages#index'
+  root 'officialsite/website#index'
 
 
   # The priority is based upon order of creation: first created -> highest priority.

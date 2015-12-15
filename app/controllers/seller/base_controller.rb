@@ -1,7 +1,8 @@
 class Seller::BaseController < ApplicationController
   layout 'seller/application'
   include Seller::SessionsHelper
-  before_action :authenticated!
+  before_action :authenticated!, :settings
+
   def settings
     @settings = {
       menus: [
