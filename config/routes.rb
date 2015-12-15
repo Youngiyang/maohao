@@ -4,6 +4,10 @@ Rails.application.routes.draw do
     resources :auth_codes, only: [:create]
     resources :users, only: [:create]
     resources :sessions, only: [:create]
+    resource :user, only: [:show] do
+      post :reset_password, on: :collection
+    end
+
   end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
