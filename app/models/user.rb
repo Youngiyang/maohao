@@ -14,6 +14,6 @@ class User < ActiveRecord::Base
   validates :state, presence: true, inclusion: { in: [0, 1] }
 
   def reset_auth_token
-    auth_token = SecureRandom.uuid
+    self.auth_token = SecureRandom.uuid
   end
 end
