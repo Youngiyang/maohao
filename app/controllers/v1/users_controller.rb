@@ -68,26 +68,30 @@ class V1::UsersController < V1::BaseController
       old_password = params[:old_password]
       new_password = params[:new_password]
       current_user = User.where(auth_token: params[:auth_code]).first
-      if current_user.authenticate(old_password)
-        if new_password != old_password
-          current_user.password = new_password
-          current_user.reset_auth_token
-          if current_user.save
-            status = true
-            return_hash[:message] = "密码已修改"
-            return_hash[:auth_token] = current_user.auth_token
+      if current_user.present?
+        if current_user.authenticate(old_password)
+          if new_password != old_password
+            current_user.password = new_password
+            current_user.reset_auth_token
+            if current_user.save
+              status = true
+              return_hash[:message] = "密码已修改"
+              return_hash[:auth_token] = current_user.auth_token
+            else
+              # 新密码格式有误
+              code = "103003"
+              return_hash[:errors] = current_user.errors
+            end
           else
-            # 新密码格式有误
-            code = "103003"
-            return_hash[:errors] = current_user.errors
+            # 新密码与原密码一样
+            code = "103005"
           end
         else
-          # 新密码与原密码一样
-          code = "103005"
+          # 原密码错误
+          code = "103002"
         end
       else
-        # 原密码错误
-        code = "103002"
+        code = "103006"
       end
     else
       # 参数错误
