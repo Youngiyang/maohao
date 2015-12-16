@@ -11,20 +11,22 @@ class ApplicationController < ActionController::Base
     if status
       return_hash.to_json
     else
-      return_error_json code
+      return_error_json code, hash
     end
   end
 
-  def return_error_json code, number=nil
+  def return_error_json code, hash={}
+    return_hash = {}
     message = I18n.t code, scope: 'error'
     if message.include?('translation missing')
       # error code not defined
-      return_error_json '101', code
+      return_hash[:code] = 101
+      return_hash[:message] =  "未定义错误代号：#{code}"
     else
-      return_hash = {}
       return_hash[:code] = code
-      return_hash[:message] = code == '101'? message + "(未定义错误代号：#{number})" : message
-      return_hash
+      return_hash[:message] = message
     end
+    return_hash.merge!(hash).to_json
+    return_hash
   end
 end

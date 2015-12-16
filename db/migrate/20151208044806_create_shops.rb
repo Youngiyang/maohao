@@ -15,7 +15,7 @@ class CreateShops < ActiveRecord::Migration
       t.boolean :business_on_holiday, null: false, default: true
       t.float :star_grade, null: false, default: 5
       t.integer :user_id, null: false
-      t.boolean :is_recommand, null: false, default: true
+      t.boolean :is_recommand, null: false, default: false
       t.text :description, null: false, default: ''
       t.boolean :is_own, null: false, default: false
       t.text :notice, null: false, default: ''
