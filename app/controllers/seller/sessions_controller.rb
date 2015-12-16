@@ -1,7 +1,13 @@
 class Seller::SessionsController < Seller::BaseController
   layout 'seller/pages'
-  skip_before_action :authenticated!, only: [:new, :create]
+  include ApplicationHelper
+  skip_before_action :authenticated!, only: [:new, :create, :upload]
   def new
+  end
+
+  def upload
+    # 获取上传凭证
+    @uptoken = uptoken
   end
 
   def create
@@ -25,4 +31,5 @@ class Seller::SessionsController < Seller::BaseController
     puts "tuichuchenggggg"
     flash.now[:success] = "安全退出成功！"
   end
+
 end

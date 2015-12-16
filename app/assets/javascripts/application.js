@@ -33,4 +33,5 @@
 //= require plugins/morris
 //= require plugins/bootstrap-tabdrop
 //= require plugins/summernote
+//= require plugins/anchorlink
 //= require plugins/minimal
