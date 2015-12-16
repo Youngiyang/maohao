@@ -15,11 +15,7 @@ module V1::SessionsHelper
   end
 
   def current_user
-    if ActionController::HttpAuthentication::Token.token_and_options(request)
-      token = ActionController::HttpAuthentication::Token.token_and_options(request)[0]
-    else
-      token = params[:private_token]
-    end
+    token = ActionController::HttpAuthentication::Token.token_and_options(request)[0]
     if token
       @current_user ||= User.find_by(auth_token: token)
     end
