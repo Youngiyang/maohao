@@ -3,13 +3,12 @@ Rails.application.routes.draw do
   namespace :v1 do
     resources :auth_codes, only: [:create]
     resources :users, only: [:create] do
-      post :forget_password, on: :collection
+      collection do
+        post :forget_password
+        post :reset_password
+      end
     end
     resources :sessions, only: [:create]
-    namespace :user do
-      post :reset_password
-    end
-
   end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
