@@ -1,7 +1,7 @@
 module V1::SessionsHelper
 
 
-  def authenticated!
+  def authenticated_by_token!
     status, code, return_hash = false, "000", {}
     if current_user
       unless current_user.state == 1

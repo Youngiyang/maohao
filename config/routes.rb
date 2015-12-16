@@ -4,8 +4,8 @@ Rails.application.routes.draw do
     resources :auth_codes, only: [:create]
     resources :users, only: [:create]
     resources :sessions, only: [:create]
-    resource :user, only: [:show] do
-      post :reset_password, on: :collection
+    namespace :user do
+      post :reset_password
     end
 
   end
