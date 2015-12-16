@@ -28,6 +28,18 @@ ActiveRecord::Schema.define(version: 20151215023116) do
     t.string   "remember_digest"
   end
 
+  create_table "auth_codes", force: :cascade do |t|
+    t.string   "mobile",                     null: false
+    t.string   "code",                       null: false
+    t.boolean  "auth_state",                 null: false
+    t.integer  "validated_time", default: 0, null: false
+    t.datetime "sent_at"
+    t.datetime "expire_at",                  null: false
+    t.string   "auth_code_type"
+  end
+
+  add_index "auth_codes", ["mobile"], name: "index_auth_codes_on_mobile", using: :btree
+
   create_table "collections", force: :cascade do |t|
     t.integer  "user_id",     null: false
     t.string   "object_type", null: false
@@ -122,7 +134,7 @@ ActiveRecord::Schema.define(version: 20151215023116) do
     t.boolean   "business_on_holiday",                                                          default: true,  null: false
     t.float     "star_grade",                                                                   default: 5.0,   null: false
     t.integer   "user_id",                                                                                      null: false
-    t.boolean   "is_recommand",                                                                 default: true,  null: false
+    t.boolean   "is_recommand",                                                                 default: false, null: false
     t.text      "description",                                                                  default: "",    null: false
     t.boolean   "is_own",                                                                       default: false, null: false
     t.text      "notice",                                                                       default: "",    null: false

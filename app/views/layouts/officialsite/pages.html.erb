@@ -1,17 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Maohow</title>
+  <title>茂号-基于本地的线上线下全渠道综合服务平台【官网】</title>
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <%= stylesheet_link_tag    'static_pages', media: 'all', 'data-turbolinks-track' => false %>
-  <%= javascript_include_tag 'static_pages', 'data-turbolinks-track' => false %>
+  <meta name="description" content="茂号(www.maohow.com)是一款面向三四线城市，基于本地的线上线下全渠道综合服务平台。旨在为当地民众提供便捷，高效的互联网生活服务。">
+  <meta name="keywords" content="茂号, 茂号官网, 茂号下载, maohow, 茂田, 博鸿, 综合服务平台">
+  <meta name="author" content="vern">
+  <meta name="googlebot" content="index,follow">
+  <%= stylesheet_link_tag    'officialsite/website', media: 'all', 'data-turbolinks-track' => false %>
+  <%= javascript_include_tag 'officialsite/website', 'data-turbolinks-track' => false %>
   <%= csrf_meta_tags %>
+
+  <!--[if lt IE 9]>
+    <%= javascript_include_tag 'error', 'data-turbolinks-track' => false %>
+  <![endif]-->
 
 </head>
 <body class="index" id="to-top">
-<!-- Preloader -->
-<div class="mask"><div id="loader"></div></div>
-<!--/Preloader -->
 
 <%= yield %>
 
