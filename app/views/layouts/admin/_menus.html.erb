@@ -1,0 +1,60 @@
+<% menus.each do |menu| %>
+  <% if menu[:submenu].length > 0 %>
+    <% if menu[:id] == @current_menu[:menu] %>
+      <li class="dropdown active open" id="<%= menu[:id] %>" >
+    <% else %>
+      <li class="dropdown" id="<%= menu[:id] %>" >
+    <% end %>
+      
+    <%= link_to "#", class: "dropdown-toggle", "data-toggle": "dropdown" do %>
+      <% if !menu[:icon].empty? %>
+        <i class="fa fa-<%= menu[:icon] %>"></i>
+      <% else %>
+        <i class="fa fa-ban"></i>
+      <% end %>
+      <%= menu[:name] %>
+      <b class="fa fa-plus dropdown-plus"></b>
+    <% end %>
+    
+    <ul class="dropdown-menu animated fadeInLeft">
+      <% menu[:submenu].each do |submenu| %>
+        <li>
+          <%= link_to submenu[:path] do  %>
+            <i class="fa fa-caret-right"></i>
+            <%= submenu[:name] %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+    
+  <% else %>
+  
+    <% if menu[:id] == @current_menu[:menu] %>
+      <li class="active" id="<%= menu[:id] %>" >
+    <% else %>
+      <li id="<%= menu[:id] %>" >
+    <% end %>
+    
+    <% if menu[:path].empty? %>
+      <%= link_to "#" do %>
+        <% if !menu[:icon].empty? %>
+          <i class="fa fa-<%= menu[:icon] %>"></i>
+        <% else %>
+          <i class="fa fa-ban"></i>
+        <% end %>
+        <%= menu[:name] %>
+      <% end %>
+    <% else %>
+      <%= link_to menu[:path] do %>
+        <% if !menu[:icon].empty? %>
+          <i class="fa fa-<%= menu[:icon] %>"></i>
+        <% else %>
+          <i class="fa fa-ban"></i>
+        <% end %>
+        <%= menu[:name] %>
+      <% end %>
+    <% end %>
+  <% end %>
+  
+  </li>
+<% end %>

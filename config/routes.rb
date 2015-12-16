@@ -1,4 +1,33 @@
 Rails.application.routes.draw do
+  namespace :seller do
+    get 'sessions/new'
+    get "login" => 'sessions#new'
+    post "login" => 'sessions#create'
+    delete "logout" => 'sessions#destroy'
+    resources :users, only: [:show]
+    resources :password_reset
+  end
+
+  namespace :admin do
+    get 'sessions/new'
+    get "login" => 'sessions#new'
+    post "login" => 'sessions#create'
+    delete "logout" => 'sessions#destroy'
+    resources :password_reset
+
+  end
+
+
+  resources :templates
+  get 'temp_index' => 'templates#index'
+  get 'temp_manageuser' => 'templates#manageuser'
+  get 'temp_manageshop' => 'templates#manageshop'
+  get 'temp_login' => 'templates#login'
+  get 'temp_forgetpasswd' => 'templates#forgetpasswd'
+  get 'temp_admin_login' => 'templates#admin_login'
+  root 'officialsite/website#index'
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

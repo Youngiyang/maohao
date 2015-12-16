@@ -1,0 +1,2 @@
+module Officialsite::WebsiteHelper
+end
