@@ -2,7 +2,9 @@ Rails.application.routes.draw do
 
   namespace :v1 do
     resources :auth_codes, only: [:create]
-    resources :users, only: [:create]
+    resources :users, only: [:create] do
+      post :forget_password, on: :collection
+    end
     resources :sessions, only: [:create]
     namespace :user do
       post :reset_password
