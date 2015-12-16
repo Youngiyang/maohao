@@ -3,10 +3,9 @@ class V1::UserController < V1::BaseController
 
   def reset_password
     status, code, return_hash = false, "000", {}
-    if params[:old_password].present? && params[:new_password].present? && params[:new_password_confirmation].present?
+    if params[:old_password].present? && params[:new_password].present?
       old_password = params[:old_password]
       new_password = params[:new_password]
-      new_password_confirmation = params[:new_password_confirmation]
       if current_user.authenticate(old_password)
         if new_password != old_password
           current_user.password = new_password
