@@ -31,7 +31,6 @@ class V1::UsersController < V1::BaseController
   end
 
   def forget_password
-    binding.pry
     status, code, return_hash = false, '000', {}
     if params[:mobile].present? && params[:password].present?
       user = User.find_by(mobile: params[:mobile])
