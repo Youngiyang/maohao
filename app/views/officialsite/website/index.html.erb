@@ -1,4 +1,8 @@
-<%= link_to "商家登录", seller_login_path, class: "btn btn-success pull-right", style: "margin: 10px 20px;" %>
+<% if current_user %>
+  <%= link_to "商家登录", seller_user_path(current_user), class: "btn btn-success pull-right", style: "margin: 10px 20px;" %>
+<% else%>
+  <%= link_to "商家登录", seller_login_path, class: "btn btn-success pull-right", style: "margin: 10px 20px;" %>
+<% end %>
 <!-- Side nav -->
 <nav class="side-nav" role="navigation">
 
