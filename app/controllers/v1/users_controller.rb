@@ -1,5 +1,5 @@
 class V1::UsersController < V1::BaseController
-  before_action :authenticated_by_token!, only: :reset_password
+  before_action :authenticated_by_token!, only: [:reset_password, :qiniu_upload]
 
   def create
     status, code, return_hash = false, "000", {}
@@ -92,6 +92,13 @@ class V1::UsersController < V1::BaseController
       # 参数错误
       code = "103004"
     end
+    render json: api_return(status, code, return_hash)
+  end
+
+  def qiniu_upload
+    status, code, return_hash = true, "000", {}
+    return_hash[:qiniu_upload] = uptoken
+    return_hash[:qiniu_domain] = QINIU_DOMAIN
     render json: api_return(status, code, return_hash)
   end
 end
