@@ -95,10 +95,10 @@ class V1::UsersController < V1::BaseController
     render json: api_return(status, code, return_hash)
   end
 
-  def qiniu_upload
+  def qiniu_uptoken
     status, code, return_hash = true, "000", {}
-    return_hash[:qiniu_upload] = uptoken
-    return_hash[:qiniu_domain] = QINIU_DOMAIN
+    return_hash[:qiniu_uptoken] = uptoken
+    return_hash[:qiniu_domain] = Rails.application.config.qiniu_domain
     render json: api_return(status, code, return_hash)
   end
 end

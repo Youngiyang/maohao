@@ -6,7 +6,7 @@ Rails.application.routes.draw do
       collection do
         post :forget_password
         post :reset_password
-        post :qiniu_upload
+        post :qiniu_uptoken
       end
     end
     resources :sessions, only: [:create]
