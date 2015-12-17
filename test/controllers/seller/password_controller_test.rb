@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Seller::PasswordResetControllerTest < ActionController::TestCase
+class Seller::PasswordControllerTest < ActionController::TestCase
   # test "the truth" do
   #   assert true
   # end

@@ -9,42 +9,44 @@
         <section class="tile color transparent-black">
           <!-- tile header -->
           <div class="tile-header text-center">
-            <h1><strong>茂号</strong>  商家平台</h1>
+            <h1><strong>茂号</strong>运营平台</h1>
           </div>
           <!-- /tile header -->
 
           <!-- tile body -->
           <div class="tile-body nopadding">
-            <form class="form-horizontal form-padd" role="form" style="margin:0 auto 4%; padding: 0 50px;" method="post" action="">
+            <%= form_for(:password, url: admin_reset_password_path, method: "post", html: { class: "form-horizontal form-padd", style: "margin:0 auto 4%; padding: 0 50px;" }) do |f| %>
+
               <div class="form-group">
                 <h2 style="font-weight: 300;font-size:18px;">重置密码</h2>
                 <hr style=" margin-bottom:0px">
               </div>
               <div class="form-group">
                 <label>旧密码</label>
-                <input type="text" class="form-control" id="user_name" name="userName" rel="popover" required="required" style="font-size:15px">
+                <%= f.password_field :old_password, class: "form-control", style: "font-size:15px", rel: "popover", required: "required" %>
+
               </div>
 
               <div class="form-group">
                 <label>新密码</label>
-                <input type="password" class="form-control" required="required" id="pwd" name="userPassword" rel="popover"  style="font-size:15px">
+                <%= f.password_field :new_password, class: "form-control", style: "font-size:15px", rel: "popover", required: "required" %>
               </div>
 
               <div class="form-group">
                 <label>确认新密码</label>
-                <input type="password" class="form-control" required="required" id="pwd" name="userPassword" rel="popover"  style="font-size:15px">
+                <%= f.password_field :new_password_confirm, class: "form-control", style: "font-size:15px", rel: "popover", required: "required" %>
               </div>
 
               <div class="form-group" style="text-align:center;margin-bottom:15px;">
-                  <button type="submit" name="submit" class="btn-submit btn btn-cyan" rel="tooltip" title="立即登录" style="padding: 10px 35px;">提交</button>
+                  <%= f.submit "提交", title: "提交", rel: "tooltip", class: "btn-submit btn btn-cyan", style: "padding: 10px 35px;" %>
               </div>
 
               <div class="text-center hlp-txt hvr-pop" style="padding:0px 10px 0px 0;">
-                <%= link_to temp_login_path do %>
+                <%= link_to seller_login_path do %>
                   <i class="fa fa-chevron-left"></i> 返回登录
                 <% end %>
               </div>
-            </form>
+            <% end %>
           </div>
           <!-- /tile body -->
           <div class="tile-footer">
@@ -58,5 +60,6 @@
     <!-- /Page content -->
   </div>
 </div>
+
 <!-- Wrap all page content end -->
 

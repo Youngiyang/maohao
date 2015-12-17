@@ -1,0 +1,2 @@
+module Seller::AuthCodeHelper
+end

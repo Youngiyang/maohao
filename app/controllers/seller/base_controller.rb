@@ -1,6 +1,7 @@
 class Seller::BaseController < ApplicationController
   layout 'seller/application'
   include Seller::SessionsHelper
+  include SmsHelper
   before_action :authenticated!, :settings
 
   def settings

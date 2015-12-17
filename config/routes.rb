@@ -5,7 +5,11 @@ Rails.application.routes.draw do
     post "login" => 'sessions#create'
     delete "logout" => 'sessions#destroy'
     resources :users, only: [:show]
-    resources :password_reset
+    get "reset_password" => 'password#new'
+    post "reset_password" => 'password#reset_from_web'
+    get "forget_password" => 'password#forget'
+    post "forget_password" => 'password#reset_from_mobile'
+    post "send_code" => 'auth_code#send_code'
   end
 
   namespace :admin do
@@ -13,7 +17,11 @@ Rails.application.routes.draw do
     get "login" => 'sessions#new'
     post "login" => 'sessions#create'
     delete "logout" => 'sessions#destroy'
-    resources :password_reset
+    get "reset_password" => 'password#new'
+    post "reset_password" => 'password#reset_from_web'
+    resources :admins, only: [:show]
+
+
 
   end
 

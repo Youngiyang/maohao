@@ -11,7 +11,7 @@ class Admin::SessionsController < Admin::BaseController
       params[:session][:remember_me] == '1' ? remember(admin) : forget(admin)
       flash.now[:success] = "登录成功！"
       puts "登录成功！"
-      redirect_to root_path
+      redirect_to admin_admin_path(admin)
     else
       puts "用户名或者密码错误"
       render 'new'

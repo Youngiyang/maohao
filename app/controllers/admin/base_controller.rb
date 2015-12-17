@@ -1,7 +1,8 @@
 class Admin::BaseController < ApplicationController
   layout 'admin/application'
   include Admin::SessionsHelper
-  before_action :authenticated!
+  include SmsHelper
+  before_action :authenticated!,:settings
   def settings
     @settings = {
       menus: [

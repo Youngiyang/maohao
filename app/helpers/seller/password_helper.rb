@@ -1,0 +1,2 @@
+module Seller::PasswordHelper
+end
