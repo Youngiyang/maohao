@@ -1,5 +1,5 @@
 class V1::UsersController < V1::BaseController
-  before_action :authenticated_by_token!, only: [:reset_password, :qiniu_upload]
+  before_action :authenticated_by_token!, only: [:reset_password, :qiniu_uptoken]
 
   def create
     status, code, return_hash = false, "000", {}
