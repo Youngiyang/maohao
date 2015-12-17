@@ -15,21 +15,19 @@ class Seller::SessionsController < Seller::BaseController
     if user && user.authenticate(params[:session][:password])
       log_in user
       params[:session][:remember_me] == '1' ? remember(user) : forget(user)
-      flash.now[:success] = "登录成功！"
-      puts "登录成功！"
+      flash[:success] = "登录成功！"
       redirect_to seller_user_path(user)
     else
-      puts "用户名或者密码错误"
-      render 'new'
       flash.now[:danger] = "用户名或者密码错误"
+      render 'new'
+
     end
   end
 
   def destroy
     log_out if logged_in?
+    flash[:success] = "安全退出成功！"
     redirect_to seller_login_path
-    puts "tuichuchenggggg"
-    flash.now[:success] = "安全退出成功！"
   end
 
 end

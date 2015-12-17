@@ -12,14 +12,14 @@ class Admin::PasswordController < Admin::BaseController
       if @admin && @admin.authenticate(old_password)
         if new_password == new_password_confirm
           @admin.update_columns(password_digest: Admin.digest(new_password))
-          puts "密码修改成功"
+          flash[:success] = "密码修改成功"
           redirect_to admin_login_path
         else
-          puts "两次输入密码不一致"
+          flash.now[:danger] = "两次输入密码不一致"
           render 'new'
         end
       else
-        puts "旧密码错误"
+        flash.now[:danger] = "旧密码错误"
         render 'new'
       end
     end

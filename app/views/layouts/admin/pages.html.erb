@@ -8,8 +8,29 @@
 <div class="mask"><div id="loader"></div></div>
 <!--/Preloader -->
 <!-- Wrap all page content here -->
- <%= yield %>
+
+<div id="wrap">
+  <!-- Make page fluid -->
+  <div class="row">
+    <!-- Page content -->
+    <div id="content" class="full-page">
+      <div class="col-md-12" style="top: 50px;">
+        <% flash.each do |message_type, message| %>
+          <div class="alert alert-big alert-<%= message_type %> alert-dismissable fade in">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4>提示</h4>
+            <p class="h5"><%= message %></p>
+          </div>
+        <% end %>
+      </div>
+
+      <%= yield %>
+    </div>
+    <!-- /Page content -->
+  </div>
+</div>
 <!-- Wrap all page content end -->
+
 
 </body>
 </html>

@@ -9,20 +9,18 @@ class Admin::SessionsController < Admin::BaseController
     if admin && admin.authenticate(params[:session][:password])
       log_in admin
       params[:session][:remember_me] == '1' ? remember(admin) : forget(admin)
-      flash.now[:success] = "登录成功！"
-      puts "登录成功！"
+      flash[:success] = "登录成功！"
       redirect_to admin_admin_path(admin)
     else
-      puts "用户名或者密码错误"
-      render 'new'
       flash.now[:danger] = "用户名或者密码错误"
+      render 'new'
     end
   end
 
   def destroy
     log_out if logged_in?
-    redirect_to admin_login_path
-    puts "退出成功"
     flash.now[:success] = "安全退出成功！"
+    redirect_to admin_login_path
+
   end
 end

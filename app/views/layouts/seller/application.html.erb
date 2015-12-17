@@ -8,10 +8,6 @@
 <!-- Preloader -->
   <div class="mask"><div id="loader"></div></div>
 <!--/Preloader -->
-  <% flash.each do |message_type, message| %>
-  <div class="alert alert-<%= message_type %>"><%= message %></div>
-  <% end %>
-
   <%= render "layouts/seller/navbar" %>
 
 </body>
