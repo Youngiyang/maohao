@@ -20,22 +20,23 @@
                 <label>手机号</label>
                 <%= f.telephone_field :mobile, class: "form-control", style: "font-size:15px", rel: "popover", required: "required", maxlength: 11 %>
               </div>
+
               <div class="form-group">
                 <label>密码</label>
                 <%= f.password_field :password, class: "form-control", required: "required", rel: "popover", style: "font-size:15px" %>
               </div>
+
+              <div class="form-group">
+                <div class="checkbox check-transparent" style="padding-left: 0px">
+                  <%= f.check_box :remember_me, id: "opt01" %>
+                  <label for="opt01">一周内自动登录</label>
+                  <%= link_to "忘记密码?", seller_forget_password_path, class: "pull-right" %>
+                </div>
+              </div>
+
               <div class="form-group" style="text-align:center;margin-bottom:15px;">
                   <%= f.submit "登录", title: "立即登录", rel: "tooltip", class: "btn-submit btn btn-cyan", style: "padding: 10px 35px;" %>
               </div>
-              <section class="controls">
-                <div class="checkbox check-transparent">
-                  <%= f.label :remember_me, class: "checkbox inline" do %>
-                    <%= f.check_box :remember_me %>
-                    <span>记住一周</span>
-                  <% end %>
-                </div>
-                <div class="text-center hlp-txt hvr-pop" style="padding:0px 10px 0px 0;"><%= link_to "忘记密码?", seller_forget_password_path %></div>
-              </section>
             <% end %>
           </div>
           <div class="tile-footer">

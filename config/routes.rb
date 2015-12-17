@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   namespace :seller do
     get 'sessions/new'
     get "login" => 'sessions#new'
+    get "upload" => 'sessions#upload'
     post "login" => 'sessions#create'
     delete "logout" => 'sessions#destroy'
     resources :users, only: [:show]
