@@ -39,12 +39,15 @@ class Seller::PasswordController < Seller::BaseController
          if Time.now < session[:auth_code]["expire_at"]
             @user.update_columns(password_digest: User.digest(new_password))
             puts "密码修改成功"
+            session[:auth_code] = nil
             redirect_to seller_login_path
          else
+          session[:auth_code] = nil
           puts "验证码已过期"
          end
       else
-         puts "验证码错误"
+        session[:auth_code] = nil
+        puts "验证码错误"
       end
     else
       puts "不能有空的输入框"
