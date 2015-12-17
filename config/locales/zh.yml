@@ -2,6 +2,7 @@ zh:
   error:
     "000": '成功'
     '101': '错误代号未定义！'
+    '102': '路由不存在'
 
     # auth_codes
     '100001': '缺少mobile或者auth_code_type参数'

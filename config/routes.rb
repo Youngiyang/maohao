@@ -9,7 +9,9 @@ Rails.application.routes.draw do
       end
     end
     resources :sessions, only: [:create]
+    match '*path' => 'errors#index', via: :all
   end
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
