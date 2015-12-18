@@ -12,4 +12,8 @@ class User < ActiveRecord::Base
   validates :password, presence: true, length: 6..18
   validates :sex, inclusion: { in: ['male', 'female', 'secret'] }, allow_blank: true
   validates :state, presence: true, inclusion: { in: [0, 1] }
+
+  def reset_auth_token
+    self.auth_token = SecureRandom.uuid
+  end
 end

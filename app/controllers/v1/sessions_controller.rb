@@ -1,8 +1,8 @@
 class V1::SessionsController < V1::BaseController
   def create
     status, code, return_hash = false, "000", {}
-    @user = User.find_by(mobile: params[:mobile])
     if params[:mobile].present? && params[:password].present?
+      @user = User.find_by(mobile: params[:mobile])
       if @user
         if @user.authenticate(params[:password])
           if @user.state == 1

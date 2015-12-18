@@ -2,9 +2,17 @@ Rails.application.routes.draw do
 
   namespace :v1 do
     resources :auth_codes, only: [:create]
-    resources :users, only: [:create]
+    resources :users, only: [:create] do
+      collection do
+        post :forget_password
+        post :reset_password
+        post :qiniu_uptoken
+      end
+    end
     resources :sessions, only: [:create]
+    match '*path' => 'errors#index', via: :all
   end
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
