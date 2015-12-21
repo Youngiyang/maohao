@@ -17,9 +17,9 @@ module V1
       )
       AuthCode.deactivate_old_auth_code(mobile, auth_code_type)
       if auth_code_type == 'sign_up' && User.exists?(mobile: mobile)
-        bad_request!('手机号已注册')
+        bad_request!('手机号已注册', code: 4000001)
       elsif auth_code_type == 'forget_password' && !User.exists?(mobile: mobile)
-        bad_request!('手机号未注册')
+        bad_request!('手机号未注册', code: 4000002)
       else
         if SmsHelper.send_auth_code_sms mobile, auth_code.code, auth_code_type
           auth_code.sent_at = Time.now

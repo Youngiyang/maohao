@@ -10,16 +10,15 @@ module V1
       if user
         if user.authenticate(params[:password])
           if user.state == 1
-            status = true
             {message: '登录成功', auth_token: user.auth_token}
           else
-            bad_request!('用户被禁用')
+            bad_request!('用户被禁用', code: 4000004)
           end
         else
-          bad_request!('手机号或密码错误')
+          bad_request!('手机号或密码错误', code: 4000005)
         end
       else
-        bad_request!('手机号未注册')
+        bad_request!('手机号未注册', code: 4000002)
       end
     end
   end
