@@ -21,7 +21,7 @@ module V1
       elsif auth_code_type == 'forget_password' && !User.exists?(mobile: mobile)
         bad_request!('手机号未注册', code: 4000002)
       else
-        if SmsHelper.send_auth_code_sms mobile, auth_code.code, auth_code_type
+        if send_auth_code_sms(mobile, auth_code.code, auth_code_type)
           auth_code.sent_at = Time.now
           auth_code.save!
           {message: '验证码发送成功'}
