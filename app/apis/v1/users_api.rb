@@ -2,10 +2,21 @@ module V1
   class UsersAPI < Grape::API
     helpers V1::SharedParams
 
-    namespace :user do
+    namespace 'user' do
       get '' do
         authenticate_by_token!
         present current_user, with: UserEntity
+      end
+
+      params do
+        optional :sex, values: ['male', 'female', 'secret']
+        at_least_one_of :nick_name, :sex, :residence, :avatar
+      end
+      post '' do
+        authenticate_by_token!
+        update_attrs = attributes_for_keys([:nick_name, :sex, :residence, :avatar])
+        current_user.update!(update_attrs)
+        {message: '修改成功'}
       end
 
       get 'qiniu_uptoken' do
