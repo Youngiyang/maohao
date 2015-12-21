@@ -5,6 +5,7 @@ module V1
     namespace :user do
       get '' do
         authenticate_by_token!
+        present current_user, with: UserEntity
       end
 
       get 'qiniu_uptoken' do
