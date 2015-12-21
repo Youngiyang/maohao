@@ -37,7 +37,7 @@ module V1
             current_user.password = new_password
             current_user.reset_auth_token
             current_user.save!
-            {message: '密码重置成功'}
+            {message: '密码重置成功', auth_token: current_user.auth_token}
           else
             bad_request!('新旧密码一致', code: 4000006)
           end
@@ -53,6 +53,9 @@ module V1
         user = User.find_by(mobile: params[:mobile])
         if user.present?
           if AuthCode.valid_auth_code?(params[:mobile], 'forget_password', params[:auth_code])
+            user.password = params[:password]
+            user.reset_auth_token
+            user.save!
             {message: '密码找回成功'}
           else
             bad_request!('验证码错误', code: 4000003)
