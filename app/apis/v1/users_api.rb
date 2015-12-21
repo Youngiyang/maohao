@@ -22,10 +22,10 @@ module V1
             current_user.save!
             {message: '密码重置成功'}
           else
-            render_api_error!('新旧密码一致', 400)
+            bad_request!('新旧密码一致')
           end
         else
-          render_api_error!('原密码不匹配', 400)
+          bad_request!('原密码不匹配')
         end
       end
 
@@ -38,10 +38,10 @@ module V1
           if AuthCode.valid_auth_code?(params[:mobile], 'forget_password', params[:auth_code])
             {message: '密码找回成功'}
           else
-            render_api_error!('验证码错误', 400)
+            bad_request!('验证码错误')
           end
         else
-          render_api_error!('手机号未注册', 400)
+          bad_request!('手机号未注册')
         end
       end
     end
@@ -52,7 +52,7 @@ module V1
       end
       post '' do
         if User.exists?(mobile: params[:mobile])
-          render_api_error!('手机号已注册', 400)
+          bad_request!('手机号已注册')
         else
           if AuthCode.valid_auth_code?(params[:mobile], 'sign_up', params[:auth_code])
             user = User.new(mobile: params[:mobile], password: params[:password])
@@ -60,7 +60,7 @@ module V1
             user.save!
             {message: '注册成功'}
           else
-            render_api_error!('验证码错误', 400)
+            bad_request!('验证码错误')
           end
         end
       end

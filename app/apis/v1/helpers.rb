@@ -34,9 +34,9 @@ module V1
       render_api_error!(message.join(' '), 403)
     end
 
-    def bad_request!(reason)
+    def bad_request!(reason, options={})
       message  = "Bad Request(#{reason})"
-      render_api_error!(message, 400)
+      render_api_error!(message, 400, options)
     end
 
     def not_found!(resource = nil)
@@ -53,7 +53,7 @@ module V1
     end
 
     def render_api_error!(message, status, options={})
-      error!({ code: status || options[:code], message: message }, status)
+      error!({code: status, message: message}.merge!(options), status)
     end
 
   end

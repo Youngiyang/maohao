@@ -17,6 +17,10 @@ gem 'bcrypt'
 
 gem 'qiniu'
 
+# grape
+gem 'grape'
+gem 'grape-entity'
+
 group :development, :test do
   gem 'pry'
   gem 'pry-nav'
