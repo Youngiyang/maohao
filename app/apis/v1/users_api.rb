@@ -7,6 +7,11 @@ module V1
         authenticate_by_token!
       end
 
+      get 'qiniu_uptoken' do
+        authenticate_by_token!
+        {qiniu_uptoken: qiniu_uptoken, qiniu_domain: Rails.application.config.qiniu_domain}
+      end
+
       params do
         requires :old_password
         requires :new_password

@@ -22,6 +22,17 @@ module V1
       ActionController::Parameters.new(attrs).permit!
     end
 
+    def qiniu_uptoken
+      put_policy = Qiniu::Auth::PutPolicy.new(
+        "playmall"     # 存储空间
+        # key,        # 最终资源名，可省略，即缺省为“创建”语义
+        # expires_in, # 相对有效期，可省略，缺省为3600秒后 uptoken 过期
+        # deadline    # 绝对有效期，可省略，指明 uptoken 过期期限（绝对值），通常用于调试
+      )
+      uptoken = Qiniu::Auth.generate_uptoken(put_policy)
+    end
+
+
     # api error helpers
 
     def unauthorized!
@@ -34,8 +45,8 @@ module V1
       render_api_error!(message.join(' '), 403)
     end
 
-    def bad_request!(reason, options={})
-      message  = "Bad Request(#{reason})"
+    def bad_request!(reason=nil, options={})
+      message  = reason.present? ? reason : "Bad Request"
       render_api_error!(message, 400, options)
     end
 
@@ -55,6 +66,5 @@ module V1
     def render_api_error!(message, status, options={})
       error!({code: status, message: message}.merge!(options), status)
     end
-
   end
 end
