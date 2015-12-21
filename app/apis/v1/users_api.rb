@@ -16,7 +16,7 @@ module V1
         authenticate_by_token!
         update_attrs = attributes_for_keys([:nick_name, :sex, :residence, :avatar])
         current_user.update!(update_attrs)
-        {message: '修改成功'}
+        present current_user, with: UserEntity
       end
 
       get 'qiniu_uptoken' do
