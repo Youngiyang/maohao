@@ -22,6 +22,7 @@ gem 'grape'
 gem 'grape-entity'
 
 group :development, :test do
+  gem 'faker'
   gem 'pry'
   gem 'pry-nav'
   gem 'web-console', '~> 2.0'
