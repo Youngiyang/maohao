@@ -3,6 +3,11 @@ module V1
     helpers V1::SharedParams
 
     namespace 'shops' do
+      get ':id' do
+        shop = Shop.find(params[:id]).includes(:coupons)
+        present shop, with: ShopEntity
+      end
+
       post ':id/follow' do
         authenticate_by_token!
         shop = Shop.find(params[:id])

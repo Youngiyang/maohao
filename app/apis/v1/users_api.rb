@@ -64,6 +64,12 @@ module V1
           bad_request!('手机号未注册', code: 4000002)
         end
       end
+
+      get 'collect_shops' do
+        authenticate_by_token!
+        collect_shops = current_user.collection_shops.includes(:active_coupons)
+        present collect_shops, with: ShopEntity
+      end
     end
 
     namespace 'users' do
