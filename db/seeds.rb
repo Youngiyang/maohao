@@ -67,3 +67,33 @@ liujun = User.create!(
     )
   end
 end
+
+10.times do |n|
+  coupon = Coupon.find(n + 2)
+  state = rand(2)
+  if state == 1
+    used_at = Time.now - 1.days
+  else
+    used_at = nil
+  end
+  CouponItem.create!(
+    user_id: liujun.id,
+    coupon_id: coupon.id,
+    coupon_sn: SecureRandom.uuid,
+    state: state,
+    used_at: used_at,
+    expired_at: Time.now + 5.days,
+    shop_id: coupon.shop_id,
+    shop_name: coupon.shop.name,
+    coupon_name: coupon.name,
+    coupon_type: coupon.cc_type,
+    coupon_cheap: coupon.cheap,
+    coupon_discount: coupon.discount,
+    coupon_start_time: Time.now,
+    coupon_end_time: Time.now + coupon.period_time.days,
+    coupon_min_amount: coupon.min_amount)
+end
+
+5.times do
+  liujun.collections.create!(object: Shop.offset(rand(1..100)).limit(1)[0])
+end
