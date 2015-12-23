@@ -66,12 +66,12 @@ module V1
       end
 
       params do
-        requires :cc_type, values: [1, 2]
+        requires :coupon_type, type: Integer, values: [1, 2]
       end
       get 'coupons' do
         authenticate_by_token!
-        coupons = current_user.coupons.where(cc_type: params[:cc_type])
-        present coupons, with: CouponEntity
+        coupon_items = CouponItem.where(user_id: current_user.id, coupon_type: params[:coupon_type])
+        present coupon_items, with: CouponItemEntity
       end
     end
 

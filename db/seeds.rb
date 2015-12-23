@@ -1,73 +1,69 @@
-# users
-user1 = User.create!(
-  nick_name: "user1",
-  avatar: "avatar_1",
-  email: "user1@example.com",
-  mobile: "13510116000",
-  password: "123456",
-  sex: "male",
-  auth_token: "token1")
+# This file should contain all the record creation needed to seed the database with its default values.
+# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
+#
+# Examples:
+#
+#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
+#   Mayor.create(name: 'Emanuel', city: cities.first)
+liujun = User.create!(
+  mobile: '13011024902',
+  password: '123456'
+)
 
-user2 = User.create!(
-  nick_name: "user2",
-  avatar: "avatar_2",
-  email: "user2@example.com",
-  mobile: "13510116111",
-  password: "123456",
-  sex: "female",
-  auth_token: "token2")
+# 商家
+100.times do |n|
+  seller = User.create!(
+    mobile: "136510249#{n.to_s.rjust(2, '0')}",
+    password: '123456',
+    is_seller: true,
+    real_name: Faker::Name.name,
+    identify_sn: Faker::Number.number(18),
+    verfied_at: Time.now
+  )
 
-# sellers
-5.times do |n|
-  User.create!(
-    nick_name: "seller_#{n}",
-    avatar: "seller_avatar_#{n}",
-    email: "seller_#{n}@example.com",
-    mobile: "1351011611#{n}",
-    password: "123456",
-    sex: "male",
-    auth_token: "seller_token#{n}")
-end
-
-
-
-# shops
-sellers = User.find_by(is_seller: true)
-sellers.each do |seller|
+  shop = Shop.create!(
+    first_class_id: 1,
+    second_class_id: 1,
+    name: Faker::Company.name[0...16],
+    region_id: 1,
+    logo: "shop-logo-#{n}.png",
+    images: ["images-#{n}.jpg"],
+    address: Faker::Address.street_address,
+    location: "POINT(#{Faker::Address.latitude} #{Faker::Address.longitude})",
+    telephone: seller.mobile,
+    star_grade: (rand(10..50)/10.0).round(1),
+    business_on_holiday: rand(1..100) < 90,
+    business_hour_start: '08:00',
+    business_hour_end: '23:00',
+    is_recommand: rand(1..10) > 8,
+    state: 1,
+    description: Faker::Lorem.paragraph[0...200],
+    notice: Faker::Lorem.paragraph[0...200],
+    user_id: seller.id
+  )
   2.times do |n|
-    shop = Shop.create!(
-      first_class_id: n,
-      name: seller.nick_name + "shop#{n}",
-      logo: "logo",
-      region_id: n,
-      address: "address",
-      location: "POINT(111 111)",
-      telephone: "0755-27666782",
-      business_hour_start: "09:00",
-      business_hour_end: "22:00",
-      user_id: seller.id,
-      state: 1)
-    5.times do |n|
-      cc_types = [1, 2]
-      Coupon.create!(
-        shop_id: shop.id,
-        name: "Coupon_#{n}",
-        cc_type: cc_types[rand(2)],
-        start_grab_time: Time.now - 2.days,
-        end_grab_time: Time.now + 5.days,
-        start_time: Time.now,
-        end_time: Time.now + 20.days,
-        cheap: 100,
-        min_amount: 300,
-        total: 100,
-        giveout: 50,
-        used: 10,
-        state: 1)
+    cc_type = n % 2 + 1
+    cheap, discount = nil;
+    if cc_type == 1
+      min_amount = 100
+      cheap = rand(10..20)
+      name = "满#{min_amount}减#{cheap}"
+    else
+      min_amount = 150
+      discount = (rand(50..90)/10.0).round(1)
+      name = "满#{min_amount}打#{discount}折"
     end
+    shop.coupons.create!(
+      name: name,
+      cc_type: cc_type,
+      cheap: cheap,
+      discount: discount,
+      min_amount: min_amount,
+      start_grab_time: Time.now(),
+      end_grab_time: rand(10..100).days.since,
+      period_time: rand(3..7),
+      total: rand(200..300),
+      state: 1
+    )
   end
-end
-
-5.times do |n|
-  user1.coupon_items.create!(coupon_id: n + 3, coupon_sn: SecureRandom.uuid)
-  user2.coupon_items.create!(coupon_id: n + 4, coupon_sn: SecureRandom.uuid)
 end

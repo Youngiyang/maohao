@@ -11,19 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151221081536) do
+ActiveRecord::Schema.define(version: 20151223075716) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "postgis"
 
   create_table "auth_codes", force: :cascade do |t|
-    t.string   "mobile",                         null: false
-    t.string   "code",                           null: false
-    t.boolean  "auth_state",     default: false, null: false
-    t.integer  "validated_time", default: 0,     null: false
+    t.string   "mobile",                     null: false
+    t.string   "code",                       null: false
+    t.boolean  "auth_state",                 null: false
+    t.integer  "validated_time", default: 0, null: false
     t.datetime "sent_at"
-    t.datetime "expire_at",                      null: false
+    t.datetime "expire_at",                  null: false
     t.string   "auth_code_type"
   end
 
@@ -38,14 +38,23 @@ ActiveRecord::Schema.define(version: 20151221081536) do
   end
 
   create_table "coupon_items", force: :cascade do |t|
-    t.integer  "user_id",                null: false
-    t.integer  "coupon_id",              null: false
-    t.string   "coupon_sn",              null: false
-    t.integer  "state",      default: 0, null: false
+    t.integer  "user_id",                       null: false
+    t.integer  "coupon_id",                     null: false
+    t.string   "coupon_sn",                     null: false
+    t.integer  "state",             default: 0, null: false
     t.datetime "used_at"
-    t.datetime "expired_at",             null: false
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "expired_at",                    null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.string   "shop_id",                       null: false
+    t.string   "shop_name",                     null: false
+    t.string   "coupon_name",                   null: false
+    t.integer  "coupon_type",                   null: false
+    t.integer  "coupon_cheap"
+    t.float    "coupon_discount"
+    t.datetime "coupon_start_time"
+    t.datetime "coupon_end_time"
+    t.integer  "coupon_min_amount"
   end
 
   add_index "coupon_items", ["coupon_id"], name: "index_coupon_items_on_coupon_id", using: :btree
