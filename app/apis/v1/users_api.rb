@@ -64,6 +64,15 @@ module V1
           bad_request!('手机号未注册', code: 4000002)
         end
       end
+
+      params do
+        requires :cc_type, values: [1, 2]
+      end
+      get 'coupons' do
+        authenticate_by_token!
+        coupons = current_user.coupons.where(cc_type: params[:cc_type])
+        present coupons, with: CouponEntity
+      end
     end
 
     namespace 'users' do
