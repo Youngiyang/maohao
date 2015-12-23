@@ -1,4 +1,4 @@
-class ShopEntity < Grape::Entity
+class ShopListEntity < Grape::Entity
   root 'shops'
   format_with(:business_hour_time) {|t| t.strftime('%H:%M')}
 
@@ -8,6 +8,6 @@ class ShopEntity < Grape::Entity
     expose :business_hour_start, :business_hour_end
   end
 
-  expose :active_coupons, with: AddonCouponEntity, as: :coupons
+  expose :active_coupons, using: CouponBasicEntity, as: :coupons
 
 end
