@@ -65,6 +65,7 @@ module V1
         end
       end
 
+
       params do
         requires :coupon_type, type: Integer, values: [1, 2]
       end
@@ -73,6 +74,13 @@ module V1
         coupon_items = CouponItem.where(user_id: current_user.id, coupon_type: params[:coupon_type])
         present coupon_items, with: CouponItemEntity
       end
+
+      get 'collect_shops' do
+        authenticate_by_token!
+        collect_shops = current_user.collection_shops.includes(:active_coupons)
+        present collect_shops, with: ShopListEntity
+      end
+
     end
 
     namespace 'users' do

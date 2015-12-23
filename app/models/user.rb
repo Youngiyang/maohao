@@ -2,9 +2,15 @@ class User < ActiveRecord::Base
   has_many :coupon_items
   has_many :coupons, through: :coupon_items
   has_many :collections
+  has_many :collection_shops, through: :collections,
+           source: :object, source_type: 'Shop'
   has_many :shops
 
+  scope :sellers, ->{where(is_seller: true)}
+
   has_secure_password validations: false
+
+  before_create :ensure_auth_token!
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
   validates :email, format: { with: VALID_EMAIL_REGEX }, uniqueness: true, allow_blank: true
@@ -16,5 +22,11 @@ class User < ActiveRecord::Base
 
   def reset_auth_token
     self.auth_token = SecureRandom.uuid
+  end
+
+  def ensure_auth_token!
+    unless self.auth_token.present?
+      self.reset_auth_token
+    end
   end
 end

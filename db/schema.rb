@@ -62,27 +62,28 @@ ActiveRecord::Schema.define(version: 20151223075716) do
   add_index "coupon_items", ["user_id"], name: "index_coupon_items_on_user_id", using: :btree
 
   create_table "coupons", force: :cascade do |t|
-    t.integer  "shop_id",         default: 0,   null: false
-    t.string   "name",                          null: false
-    t.text     "remark",          default: "",  null: false
-    t.integer  "cc_type",                       null: false
+    t.integer  "shop_id",         default: 0,  null: false
+    t.string   "name",                         null: false
+    t.text     "remark",          default: "", null: false
+    t.integer  "cc_type",                      null: false
     t.datetime "start_grab_time"
     t.datetime "end_grab_time"
     t.datetime "start_time"
     t.datetime "end_time"
     t.integer  "period_time"
-    t.float    "cheap",                         null: false
-    t.float    "min_amount",      default: 0.0, null: false
-    t.integer  "total",           default: 0,   null: false
-    t.integer  "giveout",         default: 0,   null: false
-    t.integer  "used",            default: 0,   null: false
-    t.integer  "perlimit",        default: 1,   null: false
-    t.integer  "quantity",        default: 1,   null: false
+    t.integer  "cheap"
+    t.integer  "min_amount",      default: 0,  null: false
+    t.integer  "total",           default: 0,  null: false
+    t.integer  "giveout",         default: 0,  null: false
+    t.integer  "used",            default: 0,  null: false
+    t.integer  "perlimit",        default: 1,  null: false
+    t.integer  "quantity",        default: 1,  null: false
     t.integer  "state"
     t.datetime "audited_at"
     t.string   "audit_reason"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.float    "discount"
   end
 
   create_table "regions", force: :cascade do |t|
@@ -147,6 +148,13 @@ ActiveRecord::Schema.define(version: 20151223075716) do
   add_index "shops", ["location"], name: "index_shops_on_location", using: :gist
   add_index "shops", ["name"], name: "index_shops_on_name", using: :btree
   add_index "shops", ["second_class_id"], name: "index_shops_on_second_class_id", using: :btree
+
+  create_table "user_feedbacks", force: :cascade do |t|
+    t.integer  "user_id",    null: false
+    t.string   "content",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "nick_name"
