@@ -10,6 +10,7 @@ module V1
     mount V1::SessionsAPI
     mount V1::UsersAPI
     mount V1::ShopsAPI
+    mount V1::UserFeedbacksAPI
 
     route :any, '*path' do
       error!({message: "路由错误"}, 404)

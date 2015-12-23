@@ -140,6 +140,13 @@ ActiveRecord::Schema.define(version: 20151222153544) do
   add_index "shops", ["name"], name: "index_shops_on_name", using: :btree
   add_index "shops", ["second_class_id"], name: "index_shops_on_second_class_id", using: :btree
 
+  create_table "user_feedbacks", force: :cascade do |t|
+    t.integer  "user_id",    null: false
+    t.string   "content",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "nick_name"
     t.string   "avatar"
