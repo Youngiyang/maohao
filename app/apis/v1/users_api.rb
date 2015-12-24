@@ -65,13 +65,16 @@ module V1
         end
       end
 
-
       params do
-        requires :coupon_type, type: Integer, values: [1, 2]
+        optional :coupon_type, type: Integer, values: [1, 2]
       end
       get 'coupons' do
         authenticate_by_token!
-        coupon_items = CouponItem.where(user_id: current_user.id, coupon_type: params[:coupon_type])
+        if params[:coupon_type].present?
+          coupon_items = current_user.coupon_items.where(coupon_type: params[:coupon_type])
+        else
+          coupon_items = current_user.coupon_items
+        end
         present coupon_items, with: CouponItemEntity
       end
 
