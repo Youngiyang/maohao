@@ -12,8 +12,9 @@ module V1
         if user
           if user.authenticate(params[:password])
             user.destroy
+            {message: "账号删除成功"}
           else
-            bad_request!('密码错误,你妹！')
+            bad_request!('密码都记不住,你妹！')
           end
         else
           bad_request!('没注册还要删！你他妈逗我呢！')
