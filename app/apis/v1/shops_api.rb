@@ -4,8 +4,8 @@ module V1
 
     namespace 'shops' do
       get ':id' do
-        shop = Shop.find(params[:id]).includes(:coupons)
-        present shop, with: ShopListEntity
+        shop = Shop.find(params[:id])
+        present shop, with: ShopDetailWithCouponsEntity, user: current_user
       end
 
       post ':id/follow' do
