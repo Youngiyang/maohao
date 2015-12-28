@@ -18,12 +18,12 @@ ActiveRecord::Schema.define(version: 20151223075716) do
   enable_extension "postgis"
 
   create_table "auth_codes", force: :cascade do |t|
-    t.string   "mobile",                     null: false
-    t.string   "code",                       null: false
-    t.boolean  "auth_state",                 null: false
-    t.integer  "validated_time", default: 0, null: false
+    t.string   "mobile",                         null: false
+    t.string   "code",                           null: false
+    t.boolean  "auth_state",     default: false, null: false
+    t.integer  "validated_time", default: 0,     null: false
     t.datetime "sent_at"
-    t.datetime "expire_at",                  null: false
+    t.datetime "expire_at",                      null: false
     t.string   "auth_code_type"
   end
 

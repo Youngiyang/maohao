@@ -81,7 +81,7 @@ module V1
       get 'collect_shops' do
         authenticate_by_token!
         collect_shops = current_user.collection_shops.includes(:active_coupons)
-        present collect_shops, with: ShopListEntity
+        present collect_shops, with: ShopListEntity, include_coupons: true
       end
 
     end
