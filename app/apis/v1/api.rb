@@ -11,6 +11,10 @@ module V1
     mount V1::UsersAPI
     mount V1::ShopsAPI
     mount V1::UserFeedbacksAPI
+    mount V1::CouponsAPI
+    if Rails.env == "development"
+      mount V1::SuperDevApi
+    end
 
     route :any, '*path' do
       error!({message: "路由错误"}, 404)
