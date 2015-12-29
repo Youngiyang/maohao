@@ -7,7 +7,8 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 liujun = User.create!(
   mobile: '13011024902',
-  password: '123456'
+  password: '123456',
+  avatar: "FiBwr3Yo9-wODa6bxQVbTBI2qy-P"
 )
 
 # 商家
@@ -26,8 +27,8 @@ liujun = User.create!(
     second_class_id: 1,
     name: Faker::Company.name[0...16],
     region_id: 1,
-    logo: "shop-logo-#{n}.png",
-    images: ["images-#{n}.jpg"],
+    logo: "FuVvGY489Ma_AMWgdPVWm4PBXAlC",
+    images: ["Fmw6PlH0yuLssDYULWY3oOE73p1t", "FiBwr3Yo9-wODa6bxQVbTBI2qy-P"],
     address: Faker::Address.street_address,
     location: "POINT(#{Faker::Address.latitude} #{Faker::Address.longitude})",
     telephone: seller.mobile,
