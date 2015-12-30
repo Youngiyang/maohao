@@ -2,9 +2,23 @@ class ShopDetailEntity < Grape::Entity
   root 'shops'
   format_with(:business_hour_time) {|t| t.strftime('%H:%M')}
 
-  expose :id, :name, :logo, :images, :lnt, :lng, :address, :telephone,
+  expose :id, :name, :lnt, :lng, :address, :telephone,
          :business_on_holiday, :star_grade, :is_recommand, :description,
          :notice, :created_at
+
+  expose :logo do |object|
+    if object.logo
+      Rails.application.config.qiniu_domain + object.logo
+    end
+  end
+
+  expose :images do |object|
+    if object.images
+      object.images.map do |image|
+        Rails.application.config.qiniu_domain+ image
+      end
+    end
+  end
 
   expose :first_class, :second_class, using: ShopClassEntity
 
