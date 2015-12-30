@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151223075716) do
+ActiveRecord::Schema.define(version: 20151230092420) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -128,8 +128,8 @@ ActiveRecord::Schema.define(version: 20151223075716) do
     t.string    "address",                                                                                      null: false
     t.geography "location",            limit: {:srid=>4326, :type=>"point", :geographic=>true},                 null: false
     t.string    "telephone",                                                                                    null: false
-    t.time      "business_hour_start",                                                                          null: false
-    t.time      "business_hour_end",                                                                            null: false
+    t.string    "business_hour_start",                                                                          null: false
+    t.string    "business_hour_end",                                                                            null: false
     t.boolean   "business_on_holiday",                                                          default: true,  null: false
     t.float     "star_grade",                                                                   default: 5.0,   null: false
     t.integer   "user_id",                                                                                      null: false

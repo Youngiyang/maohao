@@ -1,13 +1,8 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+namespace :add_datas do
 
-# 商铺分类
-shop_classes = [
+  desc "add default shop_classes"
+  task :shop_classes => [:environment] do
+    shop_classes = [
       {id: 1, parent_id: 0, name: "爱车"},
       {id: 2, parent_id: 1, name: "4S店/汽车销售"},
       {id: 3, parent_id: 1, name: "加油站 "},
@@ -141,10 +136,111 @@ shop_classes = [
       {id: 131, parent_id: 126, name: "体育场馆"},
       {id: 132, parent_id: 126, name: "羽毛球馆"},
       {id: 133, parent_id: 126, name: "更多运动场馆"}]
-if !ShopClass.exists?(name: shop_classes[0][:name], parent_id: shop_classes[0][:parent_id])
-  shop_classes.each do |shop_class|
-    ShopClass.create!(shop_class)
-  end
-  ActiveRecord::Base.connection.exec_query("select setval('shop_classes_id_seq',(select max(id) from shop_classes))")
-end
 
+    if !ShopClass.exists?(name: shop_classes[0][:name], parent_id: shop_classes[0][:parent_id])
+      shop_classes.each do |shop_class|
+        ShopClass.create!(shop_class)
+      end
+      ActiveRecord::Base.connection.exec_query("select setval('shop_classes_id_seq',(select max(id) from shop_classes))")
+    end
+  end
+
+  desc "add test datas"
+  task :test_datas => [:environment] do
+    if !User.exists?(mobile: "13011024902")
+
+      liujun = User.create!(
+        mobile: '13011024902',
+        password: '123456'
+      )
+
+      # 商家
+      100.times do |n|
+        seller = User.create!(
+          mobile: "136510249#{n.to_s.rjust(2, '0')}",
+          password: '123456',
+          is_seller: true,
+          real_name: Faker::Name.name,
+          identify_sn: Faker::Number.number(18),
+          verfied_at: Time.now
+        )
+
+        shop = Shop.create!(
+          first_class_id: 1,
+          second_class_id: 1,
+          name: Faker::Company.name[0...16],
+          region_id: 1,
+          logo: "shop-logo-#{n}.png",
+          images: ["images-#{n}.jpg"],
+          address: Faker::Address.street_address,
+          location: "POINT(#{Faker::Address.latitude} #{Faker::Address.longitude})",
+          telephone: seller.mobile,
+          star_grade: (rand(10..50)/10.0).round(1),
+          business_on_holiday: rand(1..100) < 90,
+          business_hour_start: '08:00',
+          business_hour_end: '23:00',
+          is_recommand: rand(1..10) > 8,
+          state: 1,
+          description: Faker::Lorem.paragraph[0...200],
+          notice: Faker::Lorem.paragraph[0...200],
+          user_id: seller.id
+        )
+        2.times do |n|
+          cc_type = n % 2 + 1
+          cheap, discount = nil;
+          if cc_type == 1
+            min_amount = 100
+            cheap = rand(10..20)
+            name = "满#{min_amount}减#{cheap}"
+          else
+            min_amount = 150
+            discount = (rand(50..90)/10.0).round(1)
+            name = "满#{min_amount}打#{discount}折"
+          end
+          shop.coupons.create!(
+            name: name,
+            cc_type: cc_type,
+            cheap: cheap,
+            discount: discount,
+            min_amount: min_amount,
+            start_grab_time: Time.now(),
+            end_grab_time: rand(10..100).days.since,
+            period_time: rand(3..7),
+            total: rand(200..300),
+            state: 1
+          )
+        end
+      end
+
+      10.times do |n|
+        coupon = Coupon.find(n + 2)
+        state = rand(2)
+        if state == 1
+          used_at = Time.now - 1.days
+        else
+          used_at = nil
+        end
+        CouponItem.create!(
+          user_id: liujun.id,
+          coupon_id: coupon.id,
+          coupon_sn: SecureRandom.uuid,
+          state: state,
+          used_at: used_at,
+          expired_at: Time.now + 5.days,
+          shop_id: coupon.shop_id,
+          shop_name: coupon.shop.name,
+          coupon_name: coupon.name,
+          coupon_type: coupon.cc_type,
+          coupon_cheap: coupon.cheap,
+          coupon_discount: coupon.discount,
+          coupon_start_time: Time.now,
+          coupon_end_time: Time.now + coupon.period_time.days,
+          coupon_min_amount: coupon.min_amount)
+      end
+
+      5.times do
+        liujun.collections.create!(object: Shop.offset(rand(1..100)).limit(1)[0])
+      end
+    end
+  end
+end
