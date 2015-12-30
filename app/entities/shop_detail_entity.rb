@@ -7,6 +7,7 @@ class ShopDetailEntity < Grape::Entity
          :notice, :created_at
 
   expose :first_class, :second_class, using: ShopClassEntity
+  expose :distance, safe: true
 
   expose :is_followed do |shop_obj, options|
     options[:user] && options[:user].collections.exists?(object: shop_obj)
