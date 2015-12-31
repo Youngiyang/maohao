@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151230092420) do
+ActiveRecord::Schema.define(version: 20151230101030) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(version: 20151230092420) do
     t.datetime "coupon_start_time"
     t.datetime "coupon_end_time"
     t.integer  "coupon_min_amount"
+    t.string   "coupon_image",                  null: false
   end
 
   add_index "coupon_items", ["coupon_id"], name: "index_coupon_items_on_coupon_id", using: :btree
@@ -84,6 +85,7 @@ ActiveRecord::Schema.define(version: 20151230092420) do
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
     t.float    "discount"
+    t.string   "image",                        null: false
   end
 
   create_table "regions", force: :cascade do |t|

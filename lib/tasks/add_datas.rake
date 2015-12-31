@@ -146,14 +146,14 @@ namespace :add_datas do
   end
 
   desc "add test datas"
-  task :test_datas => [:environment] do
+  task :test_datas => [:environment, :shop_classes] do
     if !User.exists?(mobile: "13011024902")
 
       liujun = User.create!(
         mobile: '13011024902',
         password: '123456'
       )
-
+      shop_classes = ShopClass.where('parent_id != 0')
       # 商家
       100.times do |n|
         seller = User.create!(
@@ -165,13 +165,14 @@ namespace :add_datas do
           verfied_at: Time.now
         )
 
+        shop_class = shop_classes.sample(1)[0]
         shop = Shop.create!(
-          first_class_id: 1,
-          second_class_id: 1,
+          first_class_id: shop_class.parent_id,
+          second_class_id: shop_class.id,
           name: Faker::Company.name[0...16],
           region_id: 1,
-          logo: "shop-logo-#{n}.png",
-          images: ["images-#{n}.jpg"],
+          logo: "FuVvGY489Ma_AMWgdPVWm4PBXAlC",
+          images: ["Fmw6PlH0yuLssDYULWY3oOE73p1t"],
           address: Faker::Address.street_address,
           location: "POINT(#{Faker::Address.latitude} #{Faker::Address.longitude})",
           telephone: seller.mobile,
@@ -203,17 +204,17 @@ namespace :add_datas do
             cheap: cheap,
             discount: discount,
             min_amount: min_amount,
-            start_grab_time: Time.now(),
-            end_grab_time: rand(10..100).days.since,
-            period_time: rand(3..7),
+            start_time: Time.now(),
+            end_time: rand(10..100).days.since,
             total: rand(200..300),
-            state: 1
+            state: 1,
+            image: "FiBwr3Yo9-wODa6bxQVbTBI2qy-P"
           )
         end
       end
 
       10.times do |n|
-        coupon = Coupon.find(n + 2)
+        coupon = Coupon.find(n + 3)
         state = rand(2)
         if state == 1
           used_at = Time.now - 1.days
@@ -233,9 +234,10 @@ namespace :add_datas do
           coupon_type: coupon.cc_type,
           coupon_cheap: coupon.cheap,
           coupon_discount: coupon.discount,
-          coupon_start_time: Time.now,
-          coupon_end_time: Time.now + coupon.period_time.days,
-          coupon_min_amount: coupon.min_amount)
+          coupon_start_time: coupon.start_time,
+          coupon_end_time: coupon.end_time,
+          coupon_min_amount: coupon.min_amount,
+          coupon_image: "FiBwr3Yo9-wODa6bxQVbTBI2qy-P")
       end
 
       5.times do
