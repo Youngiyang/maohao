@@ -11,19 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151229030630) do
+ActiveRecord::Schema.define(version: 20151230131031) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "postgis"
 
   create_table "auth_codes", force: :cascade do |t|
-    t.string   "mobile",                         null: false
-    t.string   "code",                           null: false
-    t.boolean  "auth_state",     default: false, null: false
-    t.integer  "validated_time", default: 0,     null: false
+    t.string   "mobile",                     null: false
+    t.string   "code",                       null: false
+    t.boolean  "auth_state",                 null: false
+    t.integer  "validated_time", default: 0, null: false
     t.datetime "sent_at"
-    t.datetime "expire_at",                      null: false
+    t.datetime "expire_at",                  null: false
     t.string   "auth_code_type"
   end
 
@@ -86,14 +86,19 @@ ActiveRecord::Schema.define(version: 20151229030630) do
     t.float    "discount"
   end
 
+  add_index "coupons", ["end_grab_time"], name: "index_coupons_on_end_grab_time", using: :btree
+
   create_table "regions", force: :cascade do |t|
     t.string   "name",                   null: false
     t.integer  "parent_id",  default: 0, null: false
     t.integer  "sort_order", default: 1, null: false
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.string   "encoding",               null: false
+    t.integer  "depth",                  null: false
   end
 
+  add_index "regions", ["name", "parent_id"], name: "index_regions_on_name_and_parent_id", unique: true, using: :btree
   add_index "regions", ["name"], name: "index_regions_on_name", using: :btree
   add_index "regions", ["parent_id"], name: "index_regions_on_parent_id", using: :btree
 
@@ -142,8 +147,8 @@ ActiveRecord::Schema.define(version: 20151229030630) do
     t.string    "audit_reason"
     t.datetime  "created_at",                                                                                   null: false
     t.datetime  "updated_at",                                                                                   null: false
-    t.integer   "total_star"
-    t.integer   "envaluation_number"
+    t.integer   "total_star",                                                                   default: 0,     null: false
+    t.integer   "envaluation_number",                                                           default: 0,     null: false
   end
 
   add_index "shops", ["first_class_id"], name: "index_shops_on_first_class_id", using: :btree
