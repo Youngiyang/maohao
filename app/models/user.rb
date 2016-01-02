@@ -29,4 +29,8 @@ class User < ActiveRecord::Base
       self.reset_auth_token
     end
   end
+
+  def is_coupon_out_of_limit? coupon
+    coupon.perlimit > self.coupons.pluck(:id).count( coupon.id)
+  end
 end
