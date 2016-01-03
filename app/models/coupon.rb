@@ -6,4 +6,8 @@ class Coupon < ActiveRecord::Base
     shops = Shop.get_shops_by_location lnt, lng, distance
     shops.map(&:coupons).flatten
   end
+
+  def is_coupon_grab_time?
+    Time.now > start_grab_time && Time.now < end_grab_time
+  end
 end
