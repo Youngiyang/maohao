@@ -29,4 +29,9 @@ class User < ActiveRecord::Base
       self.reset_auth_token
     end
   end
+
+  def grab_valid?
+    
+  end
+
 end
