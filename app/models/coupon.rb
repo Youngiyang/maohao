@@ -10,4 +10,5 @@ class Coupon < ActiveRecord::Base
   def is_coupon_grab_time?
     Time.now > start_grab_time && Time.now < end_grab_time
   end
+
 end

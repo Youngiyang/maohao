@@ -21,5 +21,11 @@ module V1
     params :mobile_password do
       use :mobile, :password
     end
+
+    params :location_params do
+      requires :lnt
+      requires :lng
+      requires :distance
+    end
   end
 end

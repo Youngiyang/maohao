@@ -31,11 +31,18 @@ class User < ActiveRecord::Base
   end
 
   def grab_valid?
-    
+    update_grab_numbers > 0
+  end
+
+  def update_grab_numbers
+    valid_grab_numbers = self.grab_numbers.to_i + (Time.now.to_i - self.last_grab_time.to_i)/3600
+    valid_grab_numbers = valid_grab_numbers > self.grab_numbers_limit.to_i ? self.grab_numbers_limit.to_i : valid_grab_numbers
+    self.update_attributes(grab_numbers: valid_grab_numbers)
+    valid_grab_numbers
   end
 
   def is_coupon_out_of_limit? coupon
-    coupon.perlimit > self.coupons.pluck(:id).count( coupon.id)
+    coupon.perlimit < self.coupons.pluck(:id).count( coupon.id)
   end
 
   def save_coupon_item_redundancy coupon
@@ -45,5 +52,22 @@ class User < ActiveRecord::Base
                              coupon_cheap: coupon.cheap, coupon_discount: coupon.discount,
                              coupon_start_time: coupon.start_time, coupon_end_time: coupon.end_time,
                              coupon_min_amount: coupon.min_amount)
+  end
+
+  def get_valid_shake_grab_coupon coupon_ids, coupons
+    if coupon_ids.present?
+      coupon = coupons[rand(coupons.count)]
+      if self.is_coupon_out_of_limit?(coupon)
+        coupon_ids.delete(coupon.id)
+        get_valid_shake_grab_coupon coupon_ids, coupons
+      end
+      coupon
+    else
+      false
+    end
+  end
+
+  def update_after_shake_grab
+    self.update_attributes(grab_numbers: self.grab_numbers - 1, last_grab_time: Time.now)
   end
 end
