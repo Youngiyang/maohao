@@ -151,6 +151,7 @@ ActiveRecord::Schema.define(version: 20151230131031) do
     t.datetime  "updated_at",                                                                                   null: false
     t.integer   "total_star",                                                                   default: 0,     null: false
     t.integer   "envaluation_number",                                                           default: 0,     null: false
+    t.integer   "city_id",                                                                      default: 0,     null: false
   end
 
   add_index "shops", ["first_class_id"], name: "index_shops_on_first_class_id", using: :btree
