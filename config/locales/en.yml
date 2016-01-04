@@ -37,3 +37,6 @@ en:
     '102002': 'bad parameters'
     '102003': 'bad auth code'
     '102004': 'missing parameter mobile or password'
+
+    #coupon
+    '200001': 'coupon invalid'
