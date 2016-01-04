@@ -63,6 +63,44 @@ module V1
           bad_request!('店铺未关注过')
         end
       end
+
+      params do
+        requires :star, type: Integer
+        requires :content, type: String
+        requires :coupon_item_id, type: Integer
+      end
+      post ':id/evaluate' do
+        authenticate_by_token!
+        coupon_item = CouponItem.find(params[:coupon_item_id])
+        shop_evaluation = ShopEvaluation.find_by(coupon_item_id: params[:coupon_item_id])
+        if coupon_item
+          if coupon_item.shop_id == params[:id]
+            if !shop_evaluation
+              if coupon_item.user_id == current_user.id
+                if coupon_item.state == 1
+                  current_user.shop_evaluations.create!(
+                    shop_id: coupon_item.shop_id,
+                    user_nick_name: current_user.nick_name,
+                    star_grade: params[:star],
+                    content: params[:content],
+                    coupon_item_id: params[:coupon_item_id])
+                  { message: '评论成功' }
+                else
+                  bad_request!('未使用该优惠券，不能评论')
+                end
+              else
+                bad_request!('该优惠券不属于当前用户')
+              end
+            else
+              bad_request!('已评论')
+            end
+          else
+            bad_request!('该优惠券不属于该商铺')
+          end
+        else
+          bad_request!('未找到该用户与优惠券的对应关系')
+        end
+      end
     end
   end
 end
