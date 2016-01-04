@@ -21,5 +21,15 @@ module V1
     params :mobile_password do
       use :mobile, :password
     end
+
+    params :pagenate do
+      optional :offset, type: Integer, default: 0
+      optional :limit, type: Integer, default: 10
+    end
+
+    params :lntlng do
+      requires :lnt, type: Float
+      requires :lng, type: Float
+    end
   end
 end
