@@ -96,7 +96,7 @@ namespace :dev_test do
       end
 
       5.times do
-        liujun.collections.create!(object: Shop.offset(rand(1..100)).limit(1)[0])
+        liujun.collections.create!(object: Shop.offset(rand(0..99)).limit(1)[0])
       end
     end
   end
