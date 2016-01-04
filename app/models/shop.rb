@@ -1,5 +1,9 @@
 class Shop < ActiveRecord::Base
+  include Concerns::GeoCoordinate
+
   has_many :coupons
+  has_many :active_coupons, -> {where('state = 1 and end_time > ?', Time.now)}, class_name: 'Coupon'
+  has_many :deactive_coupons, -> {where('state = 1 and end_time < ?', Time.now)}, class_name: 'Coupon'
   belongs_to :first_class, class_name: 'ShopClass'
   belongs_to :second_class, class_name: 'ShopClass'
   belongs_to :city, class_name: 'Region'

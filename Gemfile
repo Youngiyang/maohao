@@ -17,10 +17,15 @@ gem 'bcrypt'
 
 gem 'qiniu'
 
+# grape
+gem 'grape'
+gem 'grape-entity'
+
 group :development, :test do
   gem 'pry'
   gem 'pry-nav'
   gem 'web-console', '~> 2.0'
   gem 'spring'
+  gem 'faker'
 end
 

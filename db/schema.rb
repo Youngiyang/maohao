@@ -11,7 +11,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151215023116) do
+
+ActiveRecord::Schema.define(version: 20151230131031) do
+
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,14 +51,24 @@ ActiveRecord::Schema.define(version: 20151215023116) do
   end
 
   create_table "coupon_items", force: :cascade do |t|
-    t.integer  "user_id",                null: false
-    t.integer  "coupon_id",              null: false
-    t.string   "coupon_sn",              null: false
-    t.integer  "state",      default: 0, null: false
+    t.integer  "user_id",                        null: false
+    t.integer  "coupon_id",                      null: false
+    t.string   "coupon_sn",                      null: false
+    t.integer  "state",             default: 0,  null: false
     t.datetime "used_at"
-    t.datetime "expired_at",             null: false
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "expired_at",                     null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.string   "shop_id",                        null: false
+    t.string   "shop_name",                      null: false
+    t.string   "coupon_name",                    null: false
+    t.integer  "coupon_type",                    null: false
+    t.integer  "coupon_cheap"
+    t.float    "coupon_discount"
+    t.datetime "coupon_start_time"
+    t.datetime "coupon_end_time"
+    t.integer  "coupon_min_amount"
+    t.string   "coupon_image",      default: "", null: false
   end
 
   add_index "coupon_items", ["coupon_id"], name: "index_coupon_items_on_coupon_id", using: :btree
@@ -64,28 +76,32 @@ ActiveRecord::Schema.define(version: 20151215023116) do
   add_index "coupon_items", ["user_id"], name: "index_coupon_items_on_user_id", using: :btree
 
   create_table "coupons", force: :cascade do |t|
-    t.integer  "shop_id",         default: 0,   null: false
-    t.string   "name",                          null: false
-    t.text     "remark",          default: "",  null: false
-    t.integer  "cc_type",                       null: false
+    t.integer  "shop_id",         default: 0,  null: false
+    t.string   "name",                         null: false
+    t.text     "remark",          default: "", null: false
+    t.integer  "cc_type",                      null: false
     t.datetime "start_grab_time"
     t.datetime "end_grab_time"
     t.datetime "start_time"
     t.datetime "end_time"
     t.integer  "period_time"
-    t.float    "cheap",                         null: false
-    t.float    "min_amount",      default: 0.0, null: false
-    t.integer  "total",           default: 0,   null: false
-    t.integer  "giveout",         default: 0,   null: false
-    t.integer  "used",            default: 0,   null: false
-    t.integer  "perlimit",        default: 1,   null: false
-    t.integer  "quantity",        default: 1,   null: false
+    t.integer  "cheap"
+    t.integer  "min_amount",      default: 0,  null: false
+    t.integer  "total",           default: 0,  null: false
+    t.integer  "giveout",         default: 0,  null: false
+    t.integer  "used",            default: 0,  null: false
+    t.integer  "perlimit",        default: 1,  null: false
+    t.integer  "quantity",        default: 1,  null: false
     t.integer  "state"
     t.datetime "audited_at"
     t.string   "audit_reason"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.float    "discount"
+    t.string   "image",           default: "", null: false
   end
+
+  add_index "coupons", ["end_grab_time"], name: "index_coupons_on_end_grab_time", using: :btree
 
   create_table "regions", force: :cascade do |t|
     t.string   "name",                   null: false
@@ -93,8 +109,11 @@ ActiveRecord::Schema.define(version: 20151215023116) do
     t.integer  "sort_order", default: 1, null: false
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.string   "encoding",               null: false
+    t.integer  "depth",                  null: false
   end
 
+  add_index "regions", ["name", "parent_id"], name: "index_regions_on_name_and_parent_id", unique: true, using: :btree
   add_index "regions", ["name"], name: "index_regions_on_name", using: :btree
   add_index "regions", ["parent_id"], name: "index_regions_on_parent_id", using: :btree
 
@@ -129,8 +148,8 @@ ActiveRecord::Schema.define(version: 20151215023116) do
     t.string    "address",                                                                                      null: false
     t.geography "location",            limit: {:srid=>4326, :type=>"point", :geographic=>true},                 null: false
     t.string    "telephone",                                                                                    null: false
-    t.time      "business_hour_start",                                                                          null: false
-    t.time      "business_hour_end",                                                                            null: false
+    t.string    "business_hour_start",                                                                          null: false
+    t.string    "business_hour_end",                                                                            null: false
     t.boolean   "business_on_holiday",                                                          default: true,  null: false
     t.float     "star_grade",                                                                   default: 5.0,   null: false
     t.integer   "user_id",                                                                                      null: false
@@ -143,12 +162,21 @@ ActiveRecord::Schema.define(version: 20151215023116) do
     t.string    "audit_reason"
     t.datetime  "created_at",                                                                                   null: false
     t.datetime  "updated_at",                                                                                   null: false
+    t.integer   "total_star",                                                                   default: 0,     null: false
+    t.integer   "envaluation_number",                                                           default: 0,     null: false
   end
 
   add_index "shops", ["first_class_id"], name: "index_shops_on_first_class_id", using: :btree
   add_index "shops", ["location"], name: "index_shops_on_location", using: :gist
   add_index "shops", ["name"], name: "index_shops_on_name", using: :btree
   add_index "shops", ["second_class_id"], name: "index_shops_on_second_class_id", using: :btree
+
+  create_table "user_feedbacks", force: :cascade do |t|
+    t.integer  "user_id",    null: false
+    t.string   "content",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "nick_name"
@@ -169,6 +197,7 @@ ActiveRecord::Schema.define(version: 20151215023116) do
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
     t.string   "remember_digest"
+    t.string   "residence"
   end
 
   add_index "users", ["auth_token"], name: "index_users_on_auth_token", unique: true, using: :btree
