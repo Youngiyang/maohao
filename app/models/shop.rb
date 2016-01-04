@@ -20,7 +20,7 @@ class Shop < ActiveRecord::Base
 
   def self.get_shops_by_location lnt, lng, distance
     position = "point(#{lnt} #{lng})"
-    self.where("st_dwithin(location, '#{position}', #{distance})")
+    self.where("st_dwithin(location::geography, '#{position}'::geography, #{distance})")
     # all
   end
 end
