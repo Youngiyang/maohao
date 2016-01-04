@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160104032329) do
+ActiveRecord::Schema.define(version: 20160104134027) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -117,7 +117,7 @@ ActiveRecord::Schema.define(version: 20160104032329) do
 
   create_table "shop_evaluations", force: :cascade do |t|
     t.integer  "user_id",                    null: false
-    t.string   "user_nick_name",             null: false
+    t.string   "user_nick_name"
     t.integer  "shop_id",                    null: false
     t.integer  "star_grade",     default: 1, null: false
     t.string   "content",                    null: false
@@ -151,7 +151,7 @@ ActiveRecord::Schema.define(version: 20160104032329) do
     t.datetime  "created_at",                                                                                   null: false
     t.datetime  "updated_at",                                                                                   null: false
     t.integer   "total_star",                                                                   default: 0,     null: false
-    t.integer   "envaluation_number",                                                           default: 0,     null: false
+    t.integer   "evaluation_number",                                                            default: 0,     null: false
     t.integer   "city_id",                                                                      default: 0,     null: false
   end
 

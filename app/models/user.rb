@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
   has_many :collection_shops, through: :collections,
            source: :object, source_type: 'Shop'
   has_many :shops
+  has_many :shop_evaluations
 
   scope :sellers, ->{where(is_seller: true)}
 

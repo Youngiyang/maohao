@@ -65,7 +65,7 @@ module V1
       end
 
       params do
-        requires :star, type: Integer
+        requires :star, type: Integer, values: 1..5
         requires :content, type: String
         requires :coupon_item_id, type: Integer
       end
@@ -75,16 +75,24 @@ module V1
         shop_evaluation = ShopEvaluation.find_by(coupon_item_id: params[:coupon_item_id])
         if coupon_item
           if coupon_item.shop_id == params[:id]
-            if !shop_evaluation
+            if !shop_evaluation.present?
               if coupon_item.user_id == current_user.id
                 if coupon_item.state == 1
-                  current_user.shop_evaluations.create!(
+                  evaluation = current_user.shop_evaluations.create!(
                     shop_id: coupon_item.shop_id,
                     user_nick_name: current_user.nick_name,
                     star_grade: params[:star],
                     content: params[:content],
                     coupon_item_id: params[:coupon_item_id])
-                  { message: '评论成功' }
+                  shop = Shop.find(params[:id])
+                  total_star = shop.total_star + params[:star]
+                  evaluation_number = shop.evaluation_number + 1
+                  shop.update_attributes(
+                    total_star: total_star,
+                    evaluation_number: evaluation_number,
+                    star_grade: (total_star*1.0/evaluation_number).round(1)
+                  )
+                  evaluation
                 else
                   bad_request!('未使用该优惠券，不能评论')
                 end
