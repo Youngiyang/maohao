@@ -28,7 +28,7 @@ namespace :dev_test do
           logo: "FuVvGY489Ma_AMWgdPVWm4PBXAlC",
           images: ["Fmw6PlH0yuLssDYULWY3oOE73p1t"],
           address: Faker::Address.street_address,
-          location: "POINT(#{random(113460000..114370000)/1000000.0} #{rand(22270000..22520000)/1000000.0})",
+          location: "POINT(#{rand(113460000..114370000)/1000000.0} #{rand(22270000..22520000)/1000000.0})",
           telephone: seller.mobile,
           star_grade: (rand(10..50)/10.0).round(1),
           business_on_holiday: rand(1..100) < 90,
