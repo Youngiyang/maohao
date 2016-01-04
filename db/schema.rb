@@ -11,19 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151229091956) do
+ActiveRecord::Schema.define(version: 20151230131031) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "postgis"
 
   create_table "auth_codes", force: :cascade do |t|
-    t.string   "mobile",                         null: false
-    t.string   "code",                           null: false
-    t.boolean  "auth_state",     default: false, null: false
-    t.integer  "validated_time", default: 0,     null: false
+    t.string   "mobile",                     null: false
+    t.string   "code",                       null: false
+    t.boolean  "auth_state",                 null: false
+    t.integer  "validated_time", default: 0, null: false
     t.datetime "sent_at"
-    t.datetime "expire_at",                      null: false
+    t.datetime "expire_at",                  null: false
     t.string   "auth_code_type"
   end
 
@@ -38,23 +38,24 @@ ActiveRecord::Schema.define(version: 20151229091956) do
   end
 
   create_table "coupon_items", force: :cascade do |t|
-    t.integer  "user_id",                       null: false
-    t.integer  "coupon_id",                     null: false
-    t.string   "coupon_sn",                     null: false
-    t.integer  "state",             default: 0, null: false
+    t.integer  "user_id",                        null: false
+    t.integer  "coupon_id",                      null: false
+    t.string   "coupon_sn",                      null: false
+    t.integer  "state",             default: 0,  null: false
     t.datetime "used_at"
-    t.datetime "expired_at",                    null: false
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
-    t.string   "shop_id",                       null: false
-    t.string   "shop_name",                     null: false
-    t.string   "coupon_name",                   null: false
-    t.integer  "coupon_type",                   null: false
+    t.datetime "expired_at",                     null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.string   "shop_id",                        null: false
+    t.string   "shop_name",                      null: false
+    t.string   "coupon_name",                    null: false
+    t.integer  "coupon_type",                    null: false
     t.integer  "coupon_cheap"
     t.float    "coupon_discount"
     t.datetime "coupon_start_time"
     t.datetime "coupon_end_time"
     t.integer  "coupon_min_amount"
+    t.string   "coupon_image",      default: "", null: false
   end
 
   add_index "coupon_items", ["coupon_id"], name: "index_coupon_items_on_coupon_id", using: :btree
@@ -84,7 +85,10 @@ ActiveRecord::Schema.define(version: 20151229091956) do
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
     t.float    "discount"
+    t.string   "image",           default: "", null: false
   end
+
+  add_index "coupons", ["end_grab_time"], name: "index_coupons_on_end_grab_time", using: :btree
 
   create_table "regions", force: :cascade do |t|
     t.string   "name",                   null: false
@@ -92,8 +96,11 @@ ActiveRecord::Schema.define(version: 20151229091956) do
     t.integer  "sort_order", default: 1, null: false
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.string   "encoding",               null: false
+    t.integer  "depth",                  null: false
   end
 
+  add_index "regions", ["name", "parent_id"], name: "index_regions_on_name_and_parent_id", unique: true, using: :btree
   add_index "regions", ["name"], name: "index_regions_on_name", using: :btree
   add_index "regions", ["parent_id"], name: "index_regions_on_parent_id", using: :btree
 
@@ -128,8 +135,8 @@ ActiveRecord::Schema.define(version: 20151229091956) do
     t.string    "address",                                                                                      null: false
     t.geography "location",            limit: {:srid=>4326, :type=>"point", :geographic=>true},                 null: false
     t.string    "telephone",                                                                                    null: false
-    t.time      "business_hour_start",                                                                          null: false
-    t.time      "business_hour_end",                                                                            null: false
+    t.string    "business_hour_start",                                                                          null: false
+    t.string    "business_hour_end",                                                                            null: false
     t.boolean   "business_on_holiday",                                                          default: true,  null: false
     t.float     "star_grade",                                                                   default: 5.0,   null: false
     t.integer   "user_id",                                                                                      null: false
