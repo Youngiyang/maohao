@@ -14,4 +14,8 @@ class CouponItemEntity < Grape::Entity
   expose :expired do |obj|
     obj.coupon_end_time < Time.now
   end
+
+  expose :evaluated do |object|
+    object.try(:evaluation_id).present?
+  end
 end
