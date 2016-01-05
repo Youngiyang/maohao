@@ -39,4 +39,4 @@ en:
     '102004': 'missing parameter mobile or password'
 
     #coupon
-    '200001': 'coupon invalid'
+    '4002001': 'coupon invalid'
