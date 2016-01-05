@@ -11,24 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
 ActiveRecord::Schema.define(version: 20151230131031) do
-
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "postgis"
-
-  create_table "admins", force: :cascade do |t|
-    t.string   "name"
-    t.string   "email"
-    t.integer  "group_id",        default: 1,     null: false
-    t.string   "password_digest",                 null: false
-    t.boolean  "is_super",        default: false, null: false
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
-    t.string   "remember_digest"
-  end
 
   create_table "auth_codes", force: :cascade do |t|
     t.string   "mobile",                     null: false
@@ -153,7 +140,7 @@ ActiveRecord::Schema.define(version: 20151230131031) do
     t.boolean   "business_on_holiday",                                                          default: true,  null: false
     t.float     "star_grade",                                                                   default: 5.0,   null: false
     t.integer   "user_id",                                                                                      null: false
-    t.boolean   "is_recommand",                                                                 default: true,  null: false
+    t.boolean   "is_recommand",                                                                 default: false, null: false
     t.text      "description",                                                                  default: "",    null: false
     t.boolean   "is_own",                                                                       default: false, null: false
     t.text      "notice",                                                                       default: "",    null: false
@@ -196,7 +183,6 @@ ActiveRecord::Schema.define(version: 20151230131031) do
     t.integer  "state",           default: 1,     null: false
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
-    t.string   "remember_digest"
     t.string   "residence"
   end
 
