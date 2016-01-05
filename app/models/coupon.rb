@@ -8,7 +8,13 @@ class Coupon < ActiveRecord::Base
   end
 
   def is_coupon_grab_time?
-    Time.now > start_grab_time && Time.now < end_grab_time
+    start_time_valid = self.start_time.present? ? (Time.now > self.start_time) : true
+    end_time_valid = self.end_time.present? ? (Time.now < self.end_time) : true
+    start_time_valid && end_time_valid
+  end
+
+  def is_valid_coupon_left?
+    self.total - self.giveout > 0
   end
 
 end
