@@ -88,8 +88,6 @@ ActiveRecord::Schema.define(version: 20151230131031) do
     t.string   "image",           default: "", null: false
   end
 
-  add_index "coupons", ["end_grab_time"], name: "index_coupons_on_end_grab_time", using: :btree
-
   create_table "regions", force: :cascade do |t|
     t.string   "name",                   null: false
     t.integer  "parent_id",  default: 0, null: false

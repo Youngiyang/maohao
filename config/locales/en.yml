@@ -37,3 +37,9 @@ en:
     '102002': 'bad parameters'
     '102003': 'bad auth code'
     '102004': 'missing parameter mobile or password'
+
+    #coupon
+    '4002001': 'coupon invalid'
+    '4002002': 'grab at a invalid time'
+    '4002003': 'user coupon count out of limit'
+    '4002004': 'coupon is out of stock'

@@ -20,6 +20,7 @@ class User < ActiveRecord::Base
   validates :sex, inclusion: { in: ['male', 'female', 'secret'] }, allow_blank: true
   validates :state, presence: true, inclusion: { in: [0, 1] }
 
+
   def reset_auth_token
     self.auth_token = SecureRandom.uuid
   end
@@ -28,5 +29,18 @@ class User < ActiveRecord::Base
     unless self.auth_token.present?
       self.reset_auth_token
     end
+  end
+
+  def is_coupon_out_of_limit? coupon
+    coupon.perlimit > self.coupon_items.un_used.where(coupon_id: coupon.id).count
+  end
+
+  def save_coupon_item_redundancy coupon
+    self.coupon_items.create(coupon_id: coupon.id, coupon_sn: SecureRandom.uuid, state: 0, 
+                             expired_at: coupon.end_time, shop_id: coupon.shop_id,
+                             shop_name: coupon.shop.name, coupon_name: coupon.name, coupon_type: coupon.cc_type,
+                             coupon_cheap: coupon.cheap, coupon_discount: coupon.discount,
+                             coupon_start_time: coupon.start_time, coupon_end_time: coupon.end_time,
+                             coupon_min_amount: coupon.min_amount)
   end
 end
