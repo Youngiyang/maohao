@@ -20,6 +20,7 @@ class User < ActiveRecord::Base
   validates :sex, inclusion: { in: ['male', 'female', 'secret'] }, allow_blank: true
   validates :state, presence: true, inclusion: { in: [0, 1] }
 
+
   def reset_auth_token
     self.auth_token = SecureRandom.uuid
   end
@@ -31,7 +32,7 @@ class User < ActiveRecord::Base
   end
 
   def is_coupon_out_of_limit? coupon
-    coupon.perlimit > self.coupons.pluck(:id).count( coupon.id)
+    coupon.perlimit > self.coupons.un_used.pluck(:id).count( coupon.id)
   end
 
   def save_coupon_item_redundancy coupon
