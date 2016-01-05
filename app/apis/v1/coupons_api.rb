@@ -14,7 +14,7 @@ module V1
           coupon.increment!(:giveout)
           present coupon, with: CouponDetailWithShopEntity
         else
-          bad_request!('优惠券不可用', code: 4020001)
+          bad_request!('优惠券不可用', code: 4002001)
         end
       end
     end
