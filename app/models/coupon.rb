@@ -2,8 +2,6 @@ class Coupon < ActiveRecord::Base
   belongs_to :shop
   has_many :coupon_items
 
-  scope :un_used, ->{where(used: false)}
-
   def is_coupon_grab_time?
     binding.pry
     start_time_valid = self.start_time.present? ? (Time.now > self.start_time) : true

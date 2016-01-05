@@ -32,11 +32,11 @@ class User < ActiveRecord::Base
   end
 
   def is_coupon_out_of_limit? coupon
-    coupon.perlimit > self.coupons.un_used.pluck(:id).count( coupon.id)
+    coupon.perlimit > self.coupon_items.un_used.where(coupon_id: coupon.id).count
   end
 
   def save_coupon_item_redundancy coupon
-    self.coupon_items.create(coupon_id: coupon.id, coupon_sn: SecureRandom.uuid, state: true, 
+    self.coupon_items.create(coupon_id: coupon.id, coupon_sn: SecureRandom.uuid, state: 0, 
                              expired_at: coupon.end_time, shop_id: coupon.shop_id,
                              shop_name: coupon.shop.name, coupon_name: coupon.name, coupon_type: coupon.cc_type,
                              coupon_cheap: coupon.cheap, coupon_discount: coupon.discount,
