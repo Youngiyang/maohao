@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151230131031) do
+ActiveRecord::Schema.define(version: 20160105074200) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(version: 20151230131031) do
     t.datetime "expired_at",                     null: false
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
-    t.string   "shop_id",                        null: false
+    t.integer  "shop_id",                        null: false
     t.string   "shop_name",                      null: false
     t.string   "coupon_name",                    null: false
     t.integer  "coupon_type",                    null: false
@@ -115,12 +115,13 @@ ActiveRecord::Schema.define(version: 20151230131031) do
 
   create_table "shop_evaluations", force: :cascade do |t|
     t.integer  "user_id",                    null: false
-    t.string   "user_nick_name",             null: false
+    t.string   "user_nick_name"
     t.integer  "shop_id",                    null: false
     t.integer  "star_grade",     default: 1, null: false
     t.string   "content",                    null: false
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
+    t.integer  "coupon_item_id",             null: false
   end
 
   create_table "shops", force: :cascade do |t|
@@ -148,7 +149,7 @@ ActiveRecord::Schema.define(version: 20151230131031) do
     t.datetime  "created_at",                                                                                   null: false
     t.datetime  "updated_at",                                                                                   null: false
     t.integer   "total_star",                                                                   default: 0,     null: false
-    t.integer   "envaluation_number",                                                           default: 0,     null: false
+    t.integer   "evaluation_number",                                                            default: 0,     null: false
     t.integer   "city_id",                                                                      default: 0,     null: false
   end
 

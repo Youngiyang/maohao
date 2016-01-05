@@ -77,6 +77,37 @@ module V1
           bad_request!('店铺未关注过')
         end
       end
+
+      params do
+        requires :star, type: Integer, values: 1..5
+        requires :content, type: String
+        requires :coupon_item_id, type: Integer
+      end
+      post ':id/evaluate' do
+        authenticate_by_token!
+        coupon_item = CouponItem.find(params[:coupon_item_id])
+        shop_evaluation = ShopEvaluation.find_by(coupon_item_id: params[:coupon_item_id])
+        if (coupon_item.shop_id == params[:id].to_i && coupon_item.user_id == current_user.id &&
+            coupon_item.state == 1 && !shop_evaluation.present?)
+          evaluation = current_user.shop_evaluations.create!(
+            shop_id: coupon_item.shop_id,
+            user_nick_name: current_user.nick_name,
+            star_grade: params[:star],
+            content: params[:content],
+            coupon_item_id: params[:coupon_item_id])
+          shop = Shop.find(params[:id])
+          total_star = shop.total_star + params[:star]
+          evaluation_number = shop.evaluation_number + 1
+          shop.update_attributes(
+            total_star: total_star,
+            evaluation_number: evaluation_number,
+            star_grade: (total_star*1.0/evaluation_number).round(1)
+          )
+          evaluation
+        else
+          bad_request!('评论信息有误')
+        end
+      end
     end
   end
 end
