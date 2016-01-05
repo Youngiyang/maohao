@@ -32,8 +32,7 @@ class User < ActiveRecord::Base
   end
 
   def grab_valid?
-    # update_grab_numbers > 0
-    true
+    update_grab_numbers > 0
   end
 
   def update_grab_numbers
