@@ -73,7 +73,7 @@ module V1
         authenticate_by_token!
         coupon_item = CouponItem.find(params[:coupon_item_id])
         shop_evaluation = ShopEvaluation.find_by(coupon_item_id: params[:coupon_item_id])
-        if (coupon_item.shop_id == params[:id] && coupon_item.user_id == current_user.id &&
+        if (coupon_item.shop_id == params[:id].to_i && coupon_item.user_id == current_user.id &&
             coupon_item.state == 1 && !shop_evaluation.present?)
           evaluation = current_user.shop_evaluations.create!(
             shop_id: coupon_item.shop_id,
