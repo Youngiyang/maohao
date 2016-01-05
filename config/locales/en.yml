@@ -40,3 +40,6 @@ en:
 
     #coupon
     '4002001': 'coupon invalid'
+    '4002002': 'grab at a invalid time'
+    '4002003': 'user coupon count out of limit'
+    '4002004': 'coupon is out of stock'
