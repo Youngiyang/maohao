@@ -9,4 +9,10 @@ class CouponDetailEntity < Grape::Entity
   with_options(format_with: :utc_time) do
     expose :start_grab_time, :end_grab_time, :start_time, :end_time
   end
+
+  expose :image do |object|
+    if object.image
+      Rails.application.config.qiniu_domain + object.image
+    end
+  end
 end

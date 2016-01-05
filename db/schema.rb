@@ -38,23 +38,24 @@ ActiveRecord::Schema.define(version: 20160103071543) do
   end
 
   create_table "coupon_items", force: :cascade do |t|
-    t.integer  "user_id",                       null: false
-    t.integer  "coupon_id",                     null: false
-    t.string   "coupon_sn",                     null: false
-    t.integer  "state",             default: 0, null: false
+    t.integer  "user_id",                        null: false
+    t.integer  "coupon_id",                      null: false
+    t.string   "coupon_sn",                      null: false
+    t.integer  "state",             default: 0,  null: false
     t.datetime "used_at"
-    t.datetime "expired_at",                    null: false
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
-    t.string   "shop_id",                       null: false
-    t.string   "shop_name",                     null: false
-    t.string   "coupon_name",                   null: false
-    t.integer  "coupon_type",                   null: false
+    t.datetime "expired_at",                     null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.string   "shop_id",                        null: false
+    t.string   "shop_name",                      null: false
+    t.string   "coupon_name",                    null: false
+    t.integer  "coupon_type",                    null: false
     t.integer  "coupon_cheap"
     t.float    "coupon_discount"
     t.datetime "coupon_start_time"
     t.datetime "coupon_end_time"
     t.integer  "coupon_min_amount"
+    t.string   "coupon_image",      default: "", null: false
   end
 
   add_index "coupon_items", ["coupon_id"], name: "index_coupon_items_on_coupon_id", using: :btree
@@ -84,6 +85,7 @@ ActiveRecord::Schema.define(version: 20160103071543) do
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
     t.float    "discount"
+    t.string   "image",           default: "", null: false
   end
 
   create_table "regions", force: :cascade do |t|
@@ -131,8 +133,8 @@ ActiveRecord::Schema.define(version: 20160103071543) do
     t.string    "address",                                                                                      null: false
     t.geography "location",            limit: {:srid=>4326, :type=>"point", :geographic=>true},                 null: false
     t.string    "telephone",                                                                                    null: false
-    t.time      "business_hour_start",                                                                          null: false
-    t.time      "business_hour_end",                                                                            null: false
+    t.string    "business_hour_start",                                                                          null: false
+    t.string    "business_hour_end",                                                                            null: false
     t.boolean   "business_on_holiday",                                                          default: true,  null: false
     t.float     "star_grade",                                                                   default: 5.0,   null: false
     t.integer   "user_id",                                                                                      null: false

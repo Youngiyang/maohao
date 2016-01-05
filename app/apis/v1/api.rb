@@ -3,34 +3,17 @@ module V1
     version :v1, using: :path
     format :json
 
-    helpers V1::Helpers
-    helpers V1::SharedParams
-
-    mount V1::AuthCodesAPI
-    mount V1::SessionsAPI
-    mount V1::UsersAPI
-    mount V1::ShopsAPI
-    mount V1::UserFeedbacksAPI
-    mount V1::CouponsAPI
-    if Rails.env == "development"
-      mount V1::SuperDevApi
-    end
-
-    route :any, '*path' do
-      error!({message: "路由错误"}, 404)
-    end
-
     rescue_from ActiveRecord::RecordNotFound do
-      error!({message: '资源不存在'}, 404)
+      error!({code: 404, message: '资源不存在'}, 404)
     end
 
     rescue_from Grape::Exceptions::ValidationErrors do |e|
-      error!({message: '参数不符合要求,请检查参数是否按照 API 要求传输。', error: e.full_messages}, 400)
+      error!({code: 400, message: '参数不符合要求,请检查参数是否按照 API 要求传输。', error: e.full_messages}, 400)
     end
 
     rescue_from ActiveRecord::RecordInvalid do |e|
       record = e.record
-      error!({message: '参数不符合要求', error: record.full_messages}, 400)
+      error!({code: 400, message: '参数不符合要求', error: record.full_messages}, 400)
     end
 
     rescue_from :all do |exception|
@@ -48,6 +31,24 @@ module V1
       else
         error!({message: message}, 500)
       end
+    end
+
+    helpers V1::Helpers
+    helpers V1::SharedParams
+
+    mount V1::AuthCodesAPI
+    mount V1::SessionsAPI
+    mount V1::UsersAPI
+    mount V1::ShopsAPI
+    mount V1::UserFeedbacksAPI
+    mount V1::CouponsAPI
+    mount V1::ShopClassesAPI
+    if Rails.env == "development"
+      mount V1::SuperDevApi
+    end
+
+    route :any, '*path' do
+      error!({message: "路由错误"}, 404)
     end
   end
 end
