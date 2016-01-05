@@ -43,3 +43,6 @@ en:
     '4002002': 'grab at a invalid time'
     '4002003': 'user coupon count out of limit'
     '4002004': 'coupon is out of stock'
+    '4002005': 'user is out of valid coupon'
+    '4002006': 'no coupon, please try again'
+    '4002007': 'user has no valid time, please try later'

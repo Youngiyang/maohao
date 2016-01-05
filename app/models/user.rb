@@ -36,7 +36,7 @@ class User < ActiveRecord::Base
   end
 
   def update_grab_numbers
-    valid_grab_numbers = self.grab_numbers.to_i + (Time.now.to_i - self.last_grab_time.to_i)/3600
+    valid_grab_numbers = self.grab_numbers.to_i + (Time.now.to_i - self.first_grab_time.to_i)/3600
     valid_grab_numbers = valid_grab_numbers > self.grab_numbers_limit.to_i ? self.grab_numbers_limit.to_i : valid_grab_numbers
     self.update_attributes(grab_numbers: valid_grab_numbers)
     valid_grab_numbers
@@ -69,6 +69,10 @@ class User < ActiveRecord::Base
   end
 
   def update_after_shake_grab
-    self.update_attributes(grab_numbers: self.grab_numbers - 1, last_grab_time: Time.now)
+    if self.grab_numbers == self.grab_numbers_limit
+      self.update_attributes(grab_numbers: self.grab_numbers - 1, first_grab_time: Time.now)
+    else
+      self.update_attributes(grab_numbers: self.grab_numbers - 1)
+    end
   end
 end

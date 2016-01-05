@@ -20,13 +20,14 @@ module V1
               current_user.update_after_shake_grab
               present coupon, with: CouponDetailWithShopEntity 
             else
-              bad_request!('目前用户无可以用优惠券')
+              bad_request!('目前用户无可以用优惠券', code: 4002005)
             end
           else
-            bad_request!('未摇到，请重试')
+            current_user.update_after_shake_grab
+            bad_request!('未摇到，请重试', code: 4002006)
           end
         else
-          bad_request!('您已没有可用次数，请稍候重试')
+          bad_request!('您已没有可用次数，请稍候重试', code: 4002007)
         end
       end
 
