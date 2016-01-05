@@ -25,6 +25,7 @@ namespace :dev_test do
           second_class_id: shop_class.id,
           name: Faker::Company.name[0...16],
           region_id: 1,
+          city_id: 2002,
           logo: "FuVvGY489Ma_AMWgdPVWm4PBXAlC",
           images: ["Fmw6PlH0yuLssDYULWY3oOE73p1t"],
           address: Faker::Address.street_address,
@@ -95,7 +96,7 @@ namespace :dev_test do
       end
 
       5.times do
-        liujun.collections.create!(object: Shop.offset(rand(1..100)).limit(1)[0])
+        liujun.collections.create!(object: Shop.offset(rand(0..99)).limit(1)[0])
       end
     end
   end
