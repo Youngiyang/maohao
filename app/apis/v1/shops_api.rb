@@ -8,7 +8,7 @@ module V1
         requires :city_id, type: Integer
         optional :shop_class_id, type: Integer, default: 0
         optional :distance, type: Integer, default: 0
-        optional :order, values: ['intelligence', 'star_grade', 'distance', 'create_at'], default: 'intelligence'
+        optional :order, values: ['intelligence', 'star_grade', 'distance', 'created_at'], default: 'intelligence'
       end
       get '' do
         distance = params[:distance]
