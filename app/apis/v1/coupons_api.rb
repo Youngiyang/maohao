@@ -18,7 +18,8 @@ module V1
             if coupon
               current_user.save_coupon_item_redundancy coupon
               coupon.increment!(:giveout)
-              present coupon, with: CouponDetailWithShopEntity 
+              shake_info = {times: current_user.grab_numbers, seconds: (3600 - Time.now.to_i + current_user.first_grab_time.to_i)}
+              {coupon: CouponDetailWithShopEntity.new(coupon), shake_info: shake_info}
             else
               bad_request!('未摇到，请重试', code: 4002006)
             end
