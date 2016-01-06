@@ -22,12 +22,6 @@ module V1
       use :mobile, :password
     end
 
-    params :location_params do
-      requires :lnt
-      requires :lng
-      requires :distance
-    end
-
     params :pagenate do
       optional :offset, type: Integer, default: 0
       optional :limit, type: Integer, default: 10
