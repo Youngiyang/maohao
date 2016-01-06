@@ -37,7 +37,7 @@ class User < ActiveRecord::Base
 
   def update_grab_numbers
     valid_grab_numbers = self.grab_numbers.to_i + (Time.now.to_i - self.first_grab_time.to_i)/3600
-    valid_grab_numbers = valid_grab_numbers > self.grab_numbers_limit.to_i ? self.grab_numbers_limit.to_i : valid_grab_numbers
+    valid_grab_numbers = valid_grab_numbers > ENV["GRAB_TIME_LIMIT"].to_i ? ENV["GRAB_TIME_LIMIT"].to_i : valid_grab_numbers
     self.update_attributes(grab_numbers: valid_grab_numbers) unless valid_grab_numbers == self.grab_numbers
     valid_grab_numbers
   end
@@ -57,19 +57,17 @@ class User < ActiveRecord::Base
 
   def get_valid_shake_grab_coupon coupon_ids, coupons
     if coupon_ids.present?
-      coupon = coupons[rand(coupons.count)]
-      if self.is_coupon_out_of_limit?(coupon)
-        coupon_ids.delete(coupon.id)
-        get_valid_shake_grab_coupon coupon_ids, coupons
+      coupon = coupons[rand(coupons.count-1)]
+      if self.is_coupon_out_of_limit?(coupon) && coupon.is_valid_coupon_left? && (Time.now < coupon.end_time)
+        coupon
       end
-      coupon
     else
       false
     end
   end
 
   def update_after_shake_grab
-    if self.grab_numbers == self.grab_numbers_limit
+    if self.grab_numbers == ENV["GRAB_TIME_LIMIT"].to_i
       self.update_attributes(grab_numbers: self.grab_numbers - 1, first_grab_time: Time.now)
     else
       self.update_attributes(grab_numbers: self.grab_numbers - 1)

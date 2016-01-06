@@ -7,7 +7,7 @@ module V1
         use :location_params
       end
 
-      get 'shake_grab' do
+      post 'shake_grab' do
         authenticate_by_token!
         if current_user.grab_valid?
           # set default as 50 percent
@@ -20,7 +20,7 @@ module V1
               coupon.increment!(:giveout)
               present coupon, with: CouponDetailWithShopEntity 
             else
-              bad_request!('目前用户无可以用优惠券', code: 4002005)
+              bad_request!('未摇到，请重试', code: 4002006)
             end
           else
             bad_request!('未摇到，请重试', code: 4002006)
@@ -30,7 +30,7 @@ module V1
         end
       end
 
-      get ':id/grab' do
+      post ':id/grab' do
         authenticate_by_token!
         coupon = Coupon.find(params[:id])
         if coupon.is_coupon_grab_time?

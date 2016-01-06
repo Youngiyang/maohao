@@ -20,6 +20,7 @@ gem 'qiniu'
 # grape
 gem 'grape'
 gem 'grape-entity'
+gem 'figaro'
 
 group :development, :test do
   gem 'pry'
