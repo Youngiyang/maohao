@@ -32,16 +32,46 @@ class User < ActiveRecord::Base
     end
   end
 
+  def grab_valid?
+    update_grab_numbers > 0
+  end
+
+  def update_grab_numbers
+    valid_grab_numbers = self.grab_numbers.to_i + (Time.now.to_i - self.first_grab_time.to_i)/3600
+    valid_grab_numbers = valid_grab_numbers > ENV["GRAB_TIME_LIMIT"].to_i ? ENV["GRAB_TIME_LIMIT"].to_i : valid_grab_numbers
+    self.update_attributes(grab_numbers: valid_grab_numbers) unless valid_grab_numbers == self.grab_numbers
+    valid_grab_numbers
+  end
+
   def is_coupon_out_of_limit? coupon
     coupon.perlimit > self.coupon_items.un_used.where(coupon_id: coupon.id).count
   end
 
   def save_coupon_item_redundancy coupon
-    self.coupon_items.create(coupon_id: coupon.id, coupon_sn: SecureRandom.uuid, state: 0, 
+    self.coupon_items.create(coupon_id: coupon.id, coupon_sn: SecureRandom.uuid, state: 0,
                              expired_at: coupon.end_time, shop_id: coupon.shop_id,
                              shop_name: coupon.shop.name, coupon_name: coupon.name, coupon_type: coupon.cc_type,
                              coupon_cheap: coupon.cheap, coupon_discount: coupon.discount,
                              coupon_start_time: coupon.start_time, coupon_end_time: coupon.end_time,
                              coupon_min_amount: coupon.min_amount)
+  end
+
+  def get_valid_shake_grab_coupon coupons
+    if coupons.present?
+      coupon = coupons[rand(coupons.size)]
+      if self.is_coupon_out_of_limit?(coupon) && coupon.is_valid_coupon_left? && (Time.now < coupon.end_time)
+        coupon
+      end
+    else
+      false
+    end
+  end
+
+  def update_after_shake_grab
+    if self.grab_numbers == ENV["GRAB_TIME_LIMIT"].to_i
+      self.update_attributes(grab_numbers: self.grab_numbers - 1, first_grab_time: Time.now)
+    else
+      self.update_attributes(grab_numbers: self.grab_numbers - 1)
+    end
   end
 end

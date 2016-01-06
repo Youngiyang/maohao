@@ -94,5 +94,8 @@ module V1
       true
     end
 
+    def randomly_return chance
+      rand(100) < chance
+    end
   end
 end
