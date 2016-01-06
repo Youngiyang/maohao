@@ -1,0 +1,5 @@
+defaults: &defaults
+  GRAB_TIME_LIMIT: 3
+
+development:
+  <<: *defaults
