@@ -41,7 +41,10 @@ class User < ActiveRecord::Base
     if recover_number >= 3600
       valid_grab_numbers = self.grab_numbers.to_i + recover_number / 3600
       valid_grab_numbers = valid_grab_numbers > ENV["GRAB_TIME_LIMIT"].to_i ? ENV["GRAB_TIME_LIMIT"].to_i : valid_grab_numbers
-      self.update_attributes(grab_numbers: valid_grab_numbers, first_grab_time: self.first_grab_time + recover_number)
+      self.update_attributes(
+        grab_numbers: valid_grab_numbers,
+        first_grab_time: self.first_grab_time + recover_number
+      ) unless valid_grab_numbers == self.grab_numbers
     else
       valid_grab_numbers = self.grab_numbers.to_i
     end
