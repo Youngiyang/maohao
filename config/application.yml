@@ -1,5 +1,6 @@
 defaults: &defaults
   GRAB_TIME_LIMIT: 3
+  GRAB_DISTANCE: 1000
 
 development:
   <<: *defaults

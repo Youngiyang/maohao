@@ -4,7 +4,7 @@ class Coupon < ActiveRecord::Base
 
   def self.get_coupons_by_location lnt, lng, distance
     shops = Shop.get_shops_by_location lnt, lng, distance
-    shops.includes(:coupons)[rand(shops.count-1)].coupons
+    shops.present? ? shops.includes(:coupons)[rand(shops.size)].coupons : []
   end
 
   def is_coupon_grab_time?

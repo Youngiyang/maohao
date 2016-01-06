@@ -13,8 +13,8 @@ module V1
           # set default as 50 percent
           current_user.update_after_shake_grab
           if randomly_return 50
-            coupons = Coupon.get_coupons_by_location params[:lnt], params[:lng], params[:distance]
-            coupon = current_user.get_valid_shake_grab_coupon coupons.map(&:id), coupons
+            coupons = Coupon.get_coupons_by_location params[:lnt], params[:lng], ENV['GRAB_DISTANCE']
+            coupon = current_user.get_valid_shake_grab_coupon(coupons) if coupons.present?
             if coupon
               current_user.save_coupon_item_redundancy coupon
               coupon.increment!(:giveout)

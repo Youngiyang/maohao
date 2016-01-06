@@ -55,9 +55,9 @@ class User < ActiveRecord::Base
                              coupon_min_amount: coupon.min_amount)
   end
 
-  def get_valid_shake_grab_coupon coupon_ids, coupons
-    if coupon_ids.present?
-      coupon = coupons[rand(coupons.count-1)]
+  def get_valid_shake_grab_coupon coupons
+    if coupons.present?
+      coupon = coupons[rand(coupons.size)]
       if self.is_coupon_out_of_limit?(coupon) && coupon.is_valid_coupon_left? && (Time.now < coupon.end_time)
         coupon
       end
