@@ -37,9 +37,14 @@ class User < ActiveRecord::Base
   end
 
   def update_grab_numbers
-    valid_grab_numbers = self.grab_numbers.to_i + (Time.now.to_i - self.first_grab_time.to_i)/3600
-    valid_grab_numbers = valid_grab_numbers > ENV["GRAB_TIME_LIMIT"].to_i ? ENV["GRAB_TIME_LIMIT"].to_i : valid_grab_numbers
-    self.update_attributes(grab_numbers: valid_grab_numbers) unless valid_grab_numbers == self.grab_numbers
+    recover_number = (Time.now.to_i - self.first_grab_time.to_i)
+    if recover_number >= 3600
+      valid_grab_numbers = self.grab_numbers.to_i + recover_number / 3600
+      valid_grab_numbers = valid_grab_numbers > ENV["GRAB_TIME_LIMIT"].to_i ? ENV["GRAB_TIME_LIMIT"].to_i : valid_grab_numbers
+      self.update_attributes(grab_numbers: valid_grab_numbers, first_grab_time: self.first_grab_time + recover_number)
+    else
+      valid_grab_numbers = self.grab_numbers.to_i
+    end
     valid_grab_numbers
   end
 
