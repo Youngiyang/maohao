@@ -89,8 +89,9 @@ module V1
 
       get 'shake_info' do
         authenticate_by_token!
+        recover_time = ENV['GRAB_RECOVER_TIME'].to_i
         current_user.update_grab_numbers
-        left = (3600 - Time.now.to_i + current_user.first_grab_time.to_i)
+        left = (recover_time - Time.now.to_i + current_user.first_grab_time.to_i)
         {times: current_user.grab_numbers, seconds: current_user.grab_numbers == ENV["GRAB_TIME_LIMIT"].to_i ? -1 : left }
       end
 

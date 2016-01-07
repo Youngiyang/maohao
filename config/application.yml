@@ -1,6 +1,15 @@
 defaults: &defaults
   GRAB_TIME_LIMIT: 3
-  GRAB_DISTANCE: 1000
+  GRAB_DISTANCE: 3000
+  GRAB_RECOVER_TIME: 3600
+  GRAB_PROBABILITY: 50
 
 development:
+  <<: *defaults
+  GRAB_TIME_LIMIT: 3
+  GRAB_DISTANCE: 15000
+  GRAB_RECOVER_TIME: 10
+  GRAB_PROBABILITY: 50
+
+product:
   <<: *defaults
