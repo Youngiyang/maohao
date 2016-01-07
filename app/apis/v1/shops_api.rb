@@ -14,15 +14,15 @@ module V1
         distance = params[:distance]
         order = params[:order]
         shop_class_id = params[:shop_class_id]
-        lntlng = "POINT(#{params[:lnt]} #{params[:lng]})"
-        resources = Shop.select("shops.*, st_distance(location::geography, '#{lntlng}'::geography) as distance")
+        point = "POINT(#{params[:lng]} #{params[:lnt]})"
+        resources = Shop.select("shops.*, st_distance(location::geography, '#{point}'::geography) as distance")
                         .includes(:active_coupons, :first_class, :second_class)
         resources = resources.where(city_id: params[:city_id])
         if shop_class_id != 0
           resources = resources.where('first_class_id = ? or second_class_id = ?', shop_class_id, shop_class_id)
         end
         if distance > 0
-          resources = resources.where("st_dwithin(location::geography, '#{lntlng}'::geography, #{distance})")
+          resources = resources.where("st_dwithin(location::geography, '#{point}'::geography, #{distance})")
         end
         if order == 'intelligence'
           order = 'is_recommand DESC, distance ASC'
@@ -41,8 +41,8 @@ module V1
         use :lntlng, :pagenate
       end
       get 'search' do
-        lntlng = "POINT(#{params[:lnt]} #{params[:lng]})"
-        shops = Shop.select("shops.*, st_distance(location::geography, '#{lntlng}'::geography) as distance")
+        point = "POINT(#{params[:lng]} #{params[:lnt]})"
+        shops = Shop.select("shops.*, st_distance(location::geography, '#{point}'::geography) as distance")
                     .where('city_id = ? and name ilike ?', params[:city_id], "%#{params[:keyword]}%" )
                     .offset(params[:offset])
                     .limit(params[:limit])

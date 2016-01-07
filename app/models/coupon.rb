@@ -3,13 +3,13 @@ class Coupon < ActiveRecord::Base
   has_many :coupon_items
   scope :effectiveness, -> {where(state: 1)}
 
-  def self.get_coupons_by_location lnt, lng, distance
-    shops = Shop.get_shops_by_location lnt, lng, distance
+  def self.get_coupons_by_location lng, lnt, distance
+    shops = Shop.get_shops_by_location lng, lnt, distance
     shops.present? ? shops.includes(:coupons)[rand(shops.size)].coupons : []
   end
 
-  def self.get_nearby_effective_coupons_by_random(lnt, lng, distance)
-    position = "point(#{lnt} #{lng})"
+  def self.get_nearby_effective_coupons_by_random(lng, lnt, distance)
+    position = "point(#{lng} #{lnt})"
     self.effectiveness
         .select("coupons.*, random() as rnd")
         .joins(:shop)
