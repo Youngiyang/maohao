@@ -18,8 +18,8 @@ class Shop < ActiveRecord::Base
   validates :notice, length: { maximum: 200 }
   validates :audit_reason, length: { maximum: 200 }
 
-  def self.get_shops_by_location lng, lnt, distance
-    position = "point(#{lng} #{lnt})"
+  def self.get_shops_by_location lng, lat, distance
+    position = "point(#{lng} #{lat})"
     self.where("st_dwithin(location::geography, ?::geography, ?)", position, distance)
     # all
   end

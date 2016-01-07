@@ -1,7 +1,7 @@
 class ShopDetailEntity < Grape::Entity
   root 'shops'
 
-  expose :id, :name, :lnt, :lng, :address, :telephone,
+  expose :id, :name, :lat, :lng, :address, :telephone,
          :business_on_holiday, :star_grade, :is_recommand, :description,
          :notice, :business_hour_start, :business_hour_end
 

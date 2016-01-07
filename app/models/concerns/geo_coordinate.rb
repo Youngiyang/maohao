@@ -1,10 +1,10 @@
 module Concerns
   module GeoCoordinate
-    def lnt
+    def lat
       location.y
     end
 
-    def lnt=(y)
+    def lat=(y)
       location.y = y
     end
 

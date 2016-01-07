@@ -4,7 +4,7 @@ module V1
 
     namespace 'coupons' do
       params do
-        use :lntlng
+        use :latlng
       end
       post 'shake_grab' do
         authenticate_by_token!
@@ -15,7 +15,7 @@ module V1
           shake_info = {times: current_user.grab_numbers, seconds: (recover_time - Time.now.to_i + current_user.first_grab_time.to_i)}
           # set default as 50 percent
           if randomly_return ENV['GRAB_PROBABILITY'].to_i
-            coupons = Coupon.get_nearby_effective_coupons_by_random(params[:lng], params[:lnt], ENV['GRAB_DISTANCE']).limit(1)
+            coupons = Coupon.get_nearby_effective_coupons_by_random(params[:lng], params[:lat], ENV['GRAB_DISTANCE']).limit(1)
             coupon = coupons[0] if coupons.present?
             if coupon && coupon.is_valid_coupon_left? && current_user.is_coupon_out_of_limit?(coupon)
               coupon_item =  current_user.save_coupon_item_redundancy coupon

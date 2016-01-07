@@ -4,7 +4,7 @@ module V1
 
     namespace 'shops' do
       params do
-        use :lntlng, :pagenate
+        use :latlng, :pagenate
         requires :city_id, type: Integer
         optional :shop_class_id, type: Integer, default: 0
         optional :distance, type: Integer, default: 0
@@ -14,7 +14,7 @@ module V1
         distance = params[:distance]
         order = params[:order]
         shop_class_id = params[:shop_class_id]
-        point = "POINT(#{params[:lng]} #{params[:lnt]})"
+        point = "POINT(#{params[:lng]} #{params[:lat]})"
         resources = Shop.select("shops.*, st_distance(location::geography, '#{point}'::geography) as distance")
                         .includes(:active_coupons, :first_class, :second_class)
         resources = resources.where(city_id: params[:city_id])
@@ -38,10 +38,10 @@ module V1
       params do
         requires :city_id, type: Integer
         requires :keyword
-        use :lntlng, :pagenate
+        use :latlng, :pagenate
       end
       get 'search' do
-        point = "POINT(#{params[:lng]} #{params[:lnt]})"
+        point = "POINT(#{params[:lng]} #{params[:lat]})"
         shops = Shop.select("shops.*, st_distance(location::geography, '#{point}'::geography) as distance")
                     .where('city_id = ? and name ilike ?', params[:city_id], "%#{params[:keyword]}%" )
                     .offset(params[:offset])
