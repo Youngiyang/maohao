@@ -54,7 +54,7 @@ module V1
 
       get ':id' do
         coupon = Coupon.find(params[:id])
-        present coupon, with: CouponDetailWithShopEntity
+        present coupon, with: CouponDetailWithShopEntity, user: current_user
       end
     end
   end
