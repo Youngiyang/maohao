@@ -40,11 +40,12 @@ class User < ActiveRecord::Base
     recover_time = ENV['GRAB_RECOVER_TIME'].to_i
     recover_number = (Time.now.to_i - self.first_grab_time.to_i)
     if recover_number >= recover_time
-      valid_grab_numbers = self.grab_numbers.to_i + recover_number / recover_time
+      recover_chances = recover_number / recover_time;
+      valid_grab_numbers = self.grab_numbers.to_i + recover_chances
       valid_grab_numbers = valid_grab_numbers > ENV["GRAB_TIME_LIMIT"].to_i ? ENV["GRAB_TIME_LIMIT"].to_i : valid_grab_numbers
       self.update_attributes(
         grab_numbers: valid_grab_numbers,
-        first_grab_time: self.first_grab_time + recover_number
+        first_grab_time: self.first_grab_time + recover_chances*recover_time
       ) unless valid_grab_numbers == self.grab_numbers
     else
       valid_grab_numbers = self.grab_numbers.to_i
