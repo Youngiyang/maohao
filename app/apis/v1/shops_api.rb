@@ -37,6 +37,16 @@ module V1
 
       params do
         requires :city_id, type: Integer
+      end
+      get 'hot_search_words' do
+        hot_search_words = ['小面', '刘一手', '串串香', '鱼']
+        return_hash = {}
+        return_hash[:hot_words] = hot_search_words.map {|item| {word: item}}
+        return_hash
+      end
+
+      params do
+        requires :city_id, type: Integer
         requires :keyword
         use :latlng, :pagenate
       end
