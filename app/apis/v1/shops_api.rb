@@ -35,9 +35,6 @@ module V1
         present resources.offset(params[:offset]).limit(params[:limit]), with: ShopListEntity
       end
 
-      params do
-        requires :city_id, type: Integer
-      end
       get 'hot_search_words' do
         hot_search_words = ['小面', '刘一手', '串串香', '鱼']
         return_hash = {}
