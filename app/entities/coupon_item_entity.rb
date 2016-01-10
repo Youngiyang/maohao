@@ -5,7 +5,12 @@ class CouponItemEntity < Grape::Entity
 
   expose :id, :coupon_id, :coupon_sn, :state, :used_at, :shop_id, :shop_name,
          :coupon_name, :coupon_type, :coupon_cheap, :coupon_discount,
-         :coupon_min_amount, :coupon_image
+         :coupon_min_amount
+  expose :coupon_image do |obj|
+    if obj.coupon_image
+      Rails.application.config.qiniu_domain + obj.coupon_image
+    end
+  end
 
   with_options(format_with: :utc_time) do
     expose :expired_at, :coupon_start_time, :coupon_end_time, :created_at
