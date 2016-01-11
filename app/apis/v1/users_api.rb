@@ -81,9 +81,17 @@ module V1
         present coupon_items, with: CouponItemEntity
       end
 
+      params do
+        optional :lng, type: Float
+        optional :lat, type: Float
+      end
       get 'collect_shops' do
         authenticate_by_token!
-        collect_shops = current_user.collection_shops.includes(:active_coupons)
+        collect_shops = current_user.collection_shops
+        if params[:lng].present? && params[:lat].present?
+          collect_shops = collect_shops.with_distance(params[:lng], params[:lat])
+        end
+        collect_shops = collect_shops.includes(:active_coupons)
         present collect_shops, with: ShopListEntity, include_coupons: true
       end
 

@@ -23,4 +23,9 @@ class Shop < ActiveRecord::Base
     self.where("st_dwithin(location::geography, ?::geography, ?)", position, distance)
     # all
   end
+
+  def self.with_distance lng, lat, distance_name='distance'
+    position = "point(#{lng} #{lat})"
+    self.select("shops.*, st_distance(location::geography, '#{position}'::geography) as #{distance_name}")
+  end
 end
