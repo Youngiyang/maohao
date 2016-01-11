@@ -11,11 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160106102022) do
+ActiveRecord::Schema.define(version: 20160111073707) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "postgis"
+
+  create_table "app_banners", force: :cascade do |t|
+    t.string   "title",      null: false
+    t.string   "image",      null: false
+    t.string   "url",        null: false
+    t.string   "jump_type",  null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "auth_codes", force: :cascade do |t|
     t.string   "mobile",                     null: false
@@ -89,6 +98,13 @@ ActiveRecord::Schema.define(version: 20160106102022) do
   end
 
   add_index "coupons", ["end_grab_time"], name: "index_coupons_on_end_grab_time", using: :btree
+
+  create_table "recommended_shops", force: :cascade do |t|
+    t.integer  "shop_id",    null: false
+    t.string   "image",      null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "regions", force: :cascade do |t|
     t.string   "name",                   null: false
