@@ -36,7 +36,7 @@ module V1
     # api error helpers
 
     def unauthorized!
-      render_api_error!('Unauthorized', 401)
+      render_api_error!('未认证', 401)
     end
 
     def forbidden!(reason = nil)
