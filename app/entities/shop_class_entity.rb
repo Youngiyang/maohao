@@ -1,3 +1,4 @@
-class ShopClassEntity < Grape::Entity
+class ShopClassEntity < BaseEntity
   expose :id, :name
+  expose_qiniu_url :icon
 end

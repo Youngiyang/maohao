@@ -1,12 +1,6 @@
-class UserEntity < Grape::Entity
+class UserEntity < BaseEntity
   root 'users'
 
-  expose :id, :nick_name, :mobile, :sex, :residence, :avatar
-
-  private
-    def avatar
-      if object.avatar
-        Rails.application.config.qiniu_domain + object.avatar
-      end
-    end
+  expose :id, :nick_name, :mobile, :sex, :residence
+  expose_qiniu_url :avatar
 end
