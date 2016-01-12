@@ -31,5 +31,9 @@ module V1
       requires :lat, type: Float
       requires :lng, type: Float
     end
+
+    params :city_id do
+      requires :city_id, type: Integer
+    end
   end
 end

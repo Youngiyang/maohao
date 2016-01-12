@@ -2,7 +2,6 @@ namespace :dev_test do
   desc "add test datas"
   task :test_datas => [:environment, 'init:shop_classes', 'init:regions'] do
     if !User.exists?(mobile: "13011024902")
-
       liujun = User.create!(
         mobile: '13011024902',
         password: '123456'
@@ -44,7 +43,7 @@ namespace :dev_test do
           is_recommand: rand(1..10) > 8,
           state: 1,
           description: Faker::Lorem.paragraph[0...200],
-          notice: Faker::Lorem.paragraph[0...200],
+          notice: Faker::Lorem.sentences(3).join(' & '),
           user_id: seller.id
         )
         2.times do |n|
@@ -69,6 +68,7 @@ namespace :dev_test do
             end_time: Date.today() + rand(30..100),
             total: rand(200..300),
             state: 1,
+            remark: Faker::Lorem.sentences(3).join(' & '),
             image: "FiBwr3Yo9-wODa6bxQVbTBI2qy-P"
           )
         end
@@ -95,6 +95,7 @@ namespace :dev_test do
               end_time: Date.today() - rand(1..10),
               total: rand(200..300),
               state: 1,
+              remark: Faker::Lorem.sentences(3).join(' & '),
               image: "FiBwr3Yo9-wODa6bxQVbTBI2qy-P"
             )
           end
@@ -169,6 +170,26 @@ namespace :dev_test do
 
       5.times do
         liujun.collections.create!(object: Shop.offset(rand(0..99)).limit(1)[0])
+      end
+    end
+
+    if AppBanner.count == 0
+      3.times do |n|
+        AppBanner.create!(
+          title: Faker::Name.name,
+          image: 'Fmw6PlH0yuLssDYULWY3oOE73p1t',
+          url: 'http://www.maohow.com',
+          jump_type: 'html5'
+        )
+      end
+    end
+
+    if RecommendedShop.count == 0
+      5.times do |n|
+        RecommendedShop.create!(
+          shop_id: rand(1..100),
+          image: 'Fmw6PlH0yuLssDYULWY3oOE73p1t'
+        )
       end
     end
   end
