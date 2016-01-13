@@ -1,5 +1,5 @@
 class Coupon < ActiveRecord::Base
-  belongs_to :shop
+  belongs_to :shop, counter_cache: true
   has_many :coupon_items
   scope :effectiveness, -> {where(state: 1)}
 

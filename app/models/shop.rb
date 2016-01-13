@@ -7,7 +7,7 @@ class Shop < ActiveRecord::Base
   belongs_to :first_class, class_name: 'ShopClass'
   belongs_to :second_class, class_name: 'ShopClass'
   belongs_to :city, class_name: 'Region'
-  belongs_to :user
+  belongs_to :user, counter_cache: true
   has_many :collections, as: :object
 
   validates :name, presence: true, length: 1..16
