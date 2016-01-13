@@ -16,6 +16,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'bcrypt'
 
 gem 'qiniu'
+gem 'puma'
 
 # grape
 gem 'grape'
