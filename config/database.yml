@@ -27,20 +27,20 @@ default: &default
 
 development:
   <<: *default
-  database: mall_development
+  database: playmall_development
   username: postgres
   password: postgres1234
 test:
   <<: *default
-  database: mall_test
+  database: playmall_test
   username: postgres
   password: postgres1234
 
 production:
   <<: *default
-  host: <%= ENV['MALL_DATABASE_HOST'] %>
+  host: <%= ENV['PLAYMALL_DATABASE_HOST'] %>
   su_username: postgres
   su_password: <%= ENV['SU_DATABASE_PASSWORD'] %>
-  database: mall_production
+  database: playmall_production
   username: playmall
-  password: <%= ENV['MALL_DATABASE_PASSWORD'] %>
+  password: <%= ENV['PLAYMALL_DATABASE_PASSWORD'] %>
