@@ -117,7 +117,7 @@ namespace :dev_test do
         CouponItem.create!(
           user_id: liujun.id,
           coupon_id: coupon.id,
-          coupon_sn: SecureRandom.uuid,
+          coupon_sn: CouponItem.get_coupon_sn,
           state: state,
           used_at: used_at,
           expired_at: coupon.end_time,
@@ -148,7 +148,7 @@ namespace :dev_test do
         CouponItem.create!(
           user_id: liujun.id,
           coupon_id: coupon.id,
-          coupon_sn: SecureRandom.uuid,
+          coupon_sn: CouponItem.get_coupon_sn,
           state: state,
           used_at: used_at,
           expired_at: coupon.end_time,
