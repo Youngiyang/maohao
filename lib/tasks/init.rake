@@ -135,7 +135,7 @@ namespace :init do
       {id: 131, parent_id: 126, name: "体育场馆"},
       {id: 132, parent_id: 126, name: "羽毛球馆"},
       {id: 133, parent_id: 126, name: "更多运动场馆"}]
-    if ShopClass.count != 0
+    if ShopClass.count == 0
       shop_classes.each do |shop_class|
         ShopClass.create!(shop_class)
       end
@@ -153,7 +153,7 @@ namespace :init do
         end
       end
     end
-    if Region.count != 0
+    if Region.count == 0
       region_file = Rails.root.join('db', 'regions.json')
       regions = []
       File.open(region_file, 'r') do |f|
