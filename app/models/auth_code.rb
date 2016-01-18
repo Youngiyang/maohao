@@ -11,7 +11,14 @@ class AuthCode < ActiveRecord::Base
 
   def self.valid_auth_code?(mobile, auth_code_type, code)
     target_auth_code = where(mobile: mobile, auth_code_type: auth_code_type, auth_state: false).last
-    target_auth_code && target_auth_code.activated? && (target_auth_code.code == code)
+    valid = false
+    if target_auth_code && target_auth_code.activated?
+      target_auth_code.update_attribute(:auth_state, true)
+      if target_auth_code.code == code
+        valid = true
+      end
+    end
+    valid
   end
 
   def self.deactivate_old_auth_code(mobile, auth_code_type)
