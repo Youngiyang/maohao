@@ -66,23 +66,43 @@ module V1
       end
 
       params do
-        optional :coupon_type, type: Integer, values: [1, 2]
+        optional :coupon_type, type: Integer, values: [0, 1, 2], default: 0
       end
       get 'coupons' do
         authenticate_by_token!
-        if params[:coupon_type].present?
-          coupon_items = current_user.coupon_items.where(coupon_type: params[:coupon_type])
-        else
-          coupon_items = current_user.coupon_items
+        coupon_items = current_user.coupon_items
+                                   .select('coupon_items.*, shop_evaluations.id as evaluation_id')
+                                   .joins('left join shop_evaluations on coupon_items.id = shop_evaluations.coupon_item_id')
+
+        if params[:coupon_type] != 0
+          coupon_items = coupon_items.where(coupon_type: params[:coupon_type])
         end
+
         present coupon_items, with: CouponItemEntity
       end
 
+      params do
+        optional :lng, type: Float
+        optional :lat, type: Float
+      end
       get 'collect_shops' do
         authenticate_by_token!
-        collect_shops = current_user.collection_shops.includes(:active_coupons)
+        collect_shops = current_user.collection_shops
+        if params[:lng].present? && params[:lat].present?
+          collect_shops = collect_shops.with_distance(params[:lng], params[:lat])
+        end
+        collect_shops = collect_shops.includes(:active_coupons)
         present collect_shops, with: ShopListEntity, include_coupons: true
       end
+
+      get 'shake_info' do
+        authenticate_by_token!
+        recover_time = ENV['GRAB_RECOVER_TIME'].to_i
+        current_user.update_grab_numbers
+        left = (recover_time - Time.now.to_i + current_user.first_grab_time.to_i)
+        {times: current_user.grab_numbers, seconds: current_user.grab_numbers == ENV["GRAB_TIME_LIMIT"].to_i ? -1 : left }
+      end
+
 
     end
 

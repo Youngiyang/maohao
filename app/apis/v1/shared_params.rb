@@ -27,9 +27,13 @@ module V1
       optional :limit, type: Integer, default: 10
     end
 
-    params :lntlng do
-      requires :lnt, type: Float
+    params :latlng do
+      requires :lat, type: Float
       requires :lng, type: Float
+    end
+
+    params :city_id do
+      requires :city_id, type: Integer
     end
   end
 end

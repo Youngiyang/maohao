@@ -36,7 +36,7 @@ module V1
     # api error helpers
 
     def unauthorized!
-      render_api_error!('Unauthorized', 401)
+      render_api_error!('未认证', 401)
     end
 
     def forbidden!(reason = nil)
@@ -68,7 +68,7 @@ module V1
     end
 
     def send_auth_code_sms number, code, type
-      unless Rails.env == 'production'
+      if Rails.env == 'test'
         return true
       end
       content = "【茂号网】验证码：#{code}，此验证码10分钟内有效。非本人操作，请忽略"
@@ -94,5 +94,8 @@ module V1
       true
     end
 
+    def randomly_return chance
+      rand(100) < chance
+    end
   end
 end

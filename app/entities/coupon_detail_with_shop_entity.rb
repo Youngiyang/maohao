@@ -1,3 +1,5 @@
 class CouponDetailWithShopEntity < CouponDetailEntity
-  expose :shop, using: ShopDetailEntity
+  expose :shop do |obj, options|
+    ShopDetailEntity.new(obj.shop, options)
+  end
 end

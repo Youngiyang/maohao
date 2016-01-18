@@ -1,6 +1,5 @@
 module V1
   class API < Grape::API
-    version :v1, using: :path
     format :json
 
     rescue_from ActiveRecord::RecordNotFound do
@@ -36,6 +35,8 @@ module V1
     helpers V1::Helpers
     helpers V1::SharedParams
 
+    mount V1::Seller::API => 'seller'
+    mount V1::HomePageAPI
     mount V1::AuthCodesAPI
     mount V1::SessionsAPI
     mount V1::UsersAPI

@@ -4,25 +4,25 @@ module V1
 
     namespace 'shops' do
       params do
-        use :lntlng, :pagenate
+        use :latlng, :pagenate
         requires :city_id, type: Integer
         optional :shop_class_id, type: Integer, default: 0
         optional :distance, type: Integer, default: 0
-        optional :order, values: ['intelligence', 'star_grade', 'distance', 'create_at'], default: 'intelligence'
+        optional :order, values: ['intelligence', 'star_grade', 'distance', 'created_at'], default: 'intelligence'
       end
       get '' do
         distance = params[:distance]
         order = params[:order]
         shop_class_id = params[:shop_class_id]
-        lntlng = "POINT(#{params[:lnt]} #{params[:lng]})"
-        resources = Shop.select("shops.*, st_distance(location::geography, '#{lntlng}'::geography) as distance")
+        point = "POINT(#{params[:lng]} #{params[:lat]})"
+        resources = Shop.select("shops.*, st_distance(location::geography, '#{point}'::geography) as distance")
                         .includes(:active_coupons, :first_class, :second_class)
         resources = resources.where(city_id: params[:city_id])
         if shop_class_id != 0
           resources = resources.where('first_class_id = ? or second_class_id = ?', shop_class_id, shop_class_id)
         end
         if distance > 0
-          resources = resources.where("st_dwithin(location::geography, '#{lntlng}'::geography, #{distance})")
+          resources = resources.where("st_dwithin(location::geography, '#{point}'::geography, #{distance})")
         end
         if order == 'intelligence'
           order = 'is_recommand DESC, distance ASC'
@@ -35,14 +35,21 @@ module V1
         present resources.offset(params[:offset]).limit(params[:limit]), with: ShopListEntity
       end
 
+      get 'hot_search_words' do
+        hot_search_words = ['小面', '刘一手', '串串香', '鱼']
+        return_hash = {}
+        return_hash[:hot_words] = hot_search_words.map {|item| {word: item}}
+        return_hash
+      end
+
       params do
         requires :city_id, type: Integer
         requires :keyword
-        use :lntlng, :pagenate
+        use :latlng, :pagenate
       end
       get 'search' do
-        lntlng = "POINT(#{params[:lnt]} #{params[:lng]})"
-        shops = Shop.select("shops.*, st_distance(location::geography, '#{lntlng}'::geography) as distance")
+        point = "POINT(#{params[:lng]} #{params[:lat]})"
+        shops = Shop.select("shops.*, st_distance(location::geography, '#{point}'::geography) as distance")
                     .where('city_id = ? and name ilike ?', params[:city_id], "%#{params[:keyword]}%" )
                     .offset(params[:offset])
                     .limit(params[:limit])

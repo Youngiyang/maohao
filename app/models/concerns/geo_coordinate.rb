@@ -1,19 +1,19 @@
 module Concerns
   module GeoCoordinate
-    def lnt
-      location.x
+    def lat
+      location.y
     end
 
-    def lnt=(x)
-      location.x = x
+    def lat=(y)
+      location.y = y
     end
 
     def lng
-      location.y
+      location.x
     end
 
-    def lng=(y)
-      location.y
+    def lng=(x)
+      location.x = x
     end
   end
 end
