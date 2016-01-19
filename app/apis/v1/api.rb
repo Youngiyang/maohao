@@ -12,7 +12,7 @@ module V1
 
     rescue_from ActiveRecord::RecordInvalid do |e|
       record = e.record
-      error!({code: 400, message: '参数不符合要求', error: record.full_messages}, 400)
+      error!({code: 400, message: '参数不符合要求', error: record.errors.full_messages}, 400)
     end
 
     rescue_from :all do |exception|
