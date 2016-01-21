@@ -18,6 +18,7 @@ class Shop < ActiveRecord::Base
   validates :notice, length: { maximum: 200 }
   validates :audit_reason, length: { maximum: 200 }
 
+  default_scope {where(state: 1)}
   scope :with_city_id, ->(city_id) {where(city_id: city_id)}
   scope :with_class, ->{includes(:first_class, :second_class)}
 
