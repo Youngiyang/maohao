@@ -9,8 +9,8 @@ module V1
     get 'home_page' do
       app_banners = AppBanner.active
       recommended_shops = RecommendedShop.being_recommended.random_recommened
-      nearby_shops = Shop.with_city_id(params['city_id'])
-                         .get_shops_by_location(params[:lng], params[:lat], ENV['GRAB_DISTANCE'].to_i)
+      nearby_shops = Shop.random_shops
+                         .with_city_id(params['city_id'])
                          .limit(10)
                          .includes(:active_coupons, :first_class, :second_class)
       return_hash = {}

@@ -11,11 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160111163819) do
+ActiveRecord::Schema.define(version: 20160121022253) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "postgis"
+
+  create_table "activity_records", force: :cascade do |t|
+    t.string   "activity_name",             null: false
+    t.string   "mobile",                    null: false
+    t.integer  "state",         default: 1, null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
 
   create_table "admins", force: :cascade do |t|
     t.string   "name"
@@ -255,20 +263,20 @@ ActiveRecord::Schema.define(version: 20160111163819) do
     t.string   "nick_name"
     t.string   "avatar"
     t.string   "email"
-    t.string   "mobile",                          null: false
-    t.string   "password_digest",                 null: false
-    t.string   "sex"
+    t.string   "mobile",                             null: false
+    t.string   "password_digest",                    null: false
+    t.string   "sex",             default: "secret", null: false
     t.date     "birthday"
-    t.integer  "level",           default: 1,     null: false
-    t.boolean  "is_seller",       default: false, null: false
+    t.integer  "level",           default: 1,        null: false
+    t.boolean  "is_seller",       default: false,    null: false
     t.integer  "credit_value"
     t.string   "real_name"
     t.string   "identify_sn"
     t.datetime "verfied_at"
     t.string   "auth_token"
-    t.integer  "state",           default: 1,     null: false
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.integer  "state",           default: 1,        null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
     t.string   "residence"
     t.string   "remember_digest"
     t.integer  "shops_count",     default: 0

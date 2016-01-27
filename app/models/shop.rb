@@ -31,4 +31,8 @@ class Shop < ActiveRecord::Base
     position = "point(#{lng} #{lat})"
     self.select("shops.*, st_distance(location::geography, '#{position}'::geography) as #{distance_name}")
   end
+
+  def self.random_shops
+    self.select("shops.*, random() as rnd").order("rnd")
+  end
 end
