@@ -45,7 +45,7 @@ module V1
               bad_request!('优惠券已经抢光', code: 4002004)
             end
           else
-            bad_request!('用户优惠券数量超过限制', code: 4002003)
+            bad_request!('该优惠券每人限抢' + coupon.perlimit.to_s + '张', code: 4002003)
           end
         else
           bad_request!('抢优惠券时间不正确', code: 4002002)
