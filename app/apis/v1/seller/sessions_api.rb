@@ -12,6 +12,10 @@ module V1
         if user
           if user.authenticate(params[:password])
             if user.state == 1
+              if !user.auth_token.present?
+                user.reset_auth_token
+                user.save!
+              end
               {message: '登录成功', auth_token: user.auth_token}
             else
               bad_request!('用户被禁用', code: 4000004)
