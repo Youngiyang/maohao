@@ -63,7 +63,7 @@ class User < ActiveRecord::Base
                              shop_name: coupon.shop.name, coupon_name: coupon.name, coupon_type: coupon.cc_type,
                              coupon_cheap: coupon.cheap, coupon_discount: coupon.discount,
                              coupon_start_time: coupon.start_time, coupon_end_time: coupon.end_time,
-                             coupon_min_amount: coupon.min_amount)
+                             coupon_min_amount: coupon.min_amount, coupon_image: coupon.image)
   end
 
   def get_valid_shake_grab_coupon coupons
