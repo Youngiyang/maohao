@@ -25,11 +25,11 @@ module V1
           resources = resources.where("st_dwithin(location::geography, '#{point}'::geography, #{distance})")
         end
         if order == 'intelligence'
-          order = 'is_recommand DESC, distance ASC'
+          order = 'coupons_count DESC, is_recommand DESC, distance ASC'
         elsif order != 'distance'
-          order = "#{order} DESC"
+          order = "#{order} DESC, coupons_count DESC"
         else
-          order = "#{order} ASC"
+          order = "#{order} ASC, coupons_count DESC"
         end
         resources = resources.order(order)
         present resources.offset(params[:offset]).limit(params[:limit]), with: ShopListEntity
