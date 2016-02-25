@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160121022253) do
+ActiveRecord::Schema.define(version: 20160224031618) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,26 @@ ActiveRecord::Schema.define(version: 20160121022253) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
     t.integer  "state",      default: 1, null: false
+  end
+
+  create_table "article_categories", force: :cascade do |t|
+    t.string   "name",        null: false
+    t.string   "description"
+    t.integer  "count"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "articles", force: :cascade do |t|
+    t.string   "title",                  null: false
+    t.integer  "state",      default: 1, null: false
+    t.string   "content",                null: false
+    t.integer  "order",                  null: false
+    t.string   "category",               null: false
+    t.string   "author",                 null: false
+    t.string   "excerpt"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "auth_codes", force: :cascade do |t|
@@ -118,32 +138,6 @@ ActiveRecord::Schema.define(version: 20160121022253) do
   end
 
   add_index "coupons", ["end_grab_time"], name: "index_coupons_on_end_grab_time", using: :btree
-
-  create_table "coupons_audits", force: :cascade do |t|
-    t.integer  "state",           default: 0
-    t.string   "result",          default: ""
-    t.integer  "coupon_id"
-    t.string   "name",                          null: false
-    t.text     "remark",          default: "",  null: false
-    t.integer  "cc_type",                       null: false
-    t.datetime "start_grab_time"
-    t.datetime "end_grab_time"
-    t.datetime "start_time"
-    t.datetime "end_time"
-    t.integer  "period_time"
-    t.float    "cheap",                         null: false
-    t.float    "min_amount",      default: 0.0, null: false
-    t.integer  "total",           default: 0,   null: false
-    t.integer  "giveout",         default: 0,   null: false
-    t.integer  "used",            default: 0,   null: false
-    t.integer  "perlimit",        default: 1,   null: false
-    t.integer  "quantity",        default: 1,   null: false
-    t.datetime "audited_at"
-    t.string   "audit_reason"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
-    t.string   "image",           default: "",  null: false
-  end
 
   create_table "recommended_shops", force: :cascade do |t|
     t.integer  "shop_id",                null: false
@@ -277,11 +271,11 @@ ActiveRecord::Schema.define(version: 20160121022253) do
     t.integer  "state",           default: 1,        null: false
     t.datetime "created_at",                         null: false
     t.datetime "updated_at",                         null: false
-    t.string   "residence"
     t.string   "remember_digest"
-    t.integer  "shops_count",     default: 0
+    t.string   "residence"
     t.integer  "grab_numbers",    default: 3
     t.datetime "first_grab_time"
+    t.integer  "shops_count",     default: 0
   end
 
   add_index "users", ["auth_token"], name: "index_users_on_auth_token", unique: true, using: :btree
